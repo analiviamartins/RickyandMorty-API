@@ -1,0 +1,38 @@
+.button{
+    background-color: rgb(241, 21, 21);
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.button:hover{
+    opacity: 1;
+}
+
+.carForm{
+    padding-bottom: 1.5rem;
+}
+
+.input{
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    width: 100%;
+}
+
+.app{
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #efefef;
+    padding: 20px 30px;
+    border-radius: 10px;   
+}
+
+.title{
+    text-align: center;
+}
