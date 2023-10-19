@@ -1,10 +1,9 @@
-class Persos {
-    constructor(nome, estado, especie, local, episodio, image) {
+class Perso {
+    constructor(nome, estado, especie, genero, image) {
         this.nome = nome;
         this.estado = estado;
         this.especie = especie;
-        this.local = local;
-        this.episodio = episodio;
+        this.genero = genero;
         this.image = image;
         this.id = this.generateId();
     }
@@ -18,4 +17,4 @@ class Persos {
       }
 }
 
-export default Persos;
+export default Perso;
