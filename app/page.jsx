@@ -21,7 +21,7 @@ function page() {
   }, []);
   return (
     <div>
-      <h1>Ricky And Morty</h1>
+      
       {
         dadosApi ? (
           dadosApi.results.map((personagens, index) => (
@@ -29,7 +29,7 @@ function page() {
               <h2>
                 {personagens.name}
               </h2>
-              <img src={personagens.avatar} width={150} height={130} />
+              <img src={personagens.image} width={150} height={130} />
               <p>
                 {personagens.status}
                </p>
