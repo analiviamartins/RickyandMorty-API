@@ -20,12 +20,14 @@ function page() {
 
   }, []);
   return (
-    <div>
-      
+    <div className="container">
+      <div id="img-logo">
+        <img src="/Rick-and-Morty.png" width={900} height={500} />
+      </div>
       {
         dadosApi ? (
           dadosApi.results.map((personagens, index) => (
-            <div key={index}>
+            <div key={index} className="card">
               <h2>
                 {personagens.name}
               </h2>
