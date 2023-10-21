@@ -35,8 +35,8 @@ const cadastro = ({ }) => {
             <input value={image} className={style.input} onChange={(e) => setImage(e.target.value)} type="text" placeholder='Link da imagem' />
             <button className={style.button} type='button' onClick={handleSubmit}>Cadastrar</button>
             <div className={style.lista}>
-                {listaPersonagens.listaPerso.map((personagem) => (
-                    <Personagem key={personagem.id} personagem={personagem} handleSubmit={handleSubmit} />
+                {listaPersonagens.listaPerso.map((person) => (
+                    <Personagem key={person.id} person={person} handleSubmit={handleSubmit} />
                 ))}
             </div>
         </div>

@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import listPerso from '../../models/listPerso'
-import Perso from '../../models/persons'
+import Person from '../../models/persons'
 import Cadastro from "../components/form/form"
 
 
@@ -16,10 +16,10 @@ export default function cadastro() {
   const handleSubmit = () => {
     if (!nome || !estado || !especie || !genero || !image) return;
 
-    const perso = new Perso(nome, estado, especie, genero, image)
-    console.log(perso);
+    const person = new Person(nome, estado, especie, genero, image)
+    console.log(person);
 
-    listaPersonagens.add(perso)
+    listaPersonagens.add(person)
 
     setNome("");
     setEstado("");

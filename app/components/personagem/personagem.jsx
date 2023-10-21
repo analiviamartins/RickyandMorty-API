@@ -1,20 +1,20 @@
 import React from 'react'
 import style from "../personagem/personagem.module.css"
 
-const personagem = ({ personagem, deletePers }) => {
+const personagem = ({ person, deletePers }) => {
   return (
     <div >
       <div className={style.card}>
         <div className={style.content} >
-          <p className={style.p}><strong>Nome:</strong>{personagem.nome}</p>
-          <p className={style.p}><strong>Estado: </strong>{personagem.estado}</p>
-          <p className={style.p}><strong>Especie: </strong>{personagem.especie}</p>
-          <p className={style.p}><strong>Gênero: </strong>{personagem.genero}</p>
-          <p className={style.p}><strong>Imagem: </strong>{personagem.image}</p>
+          <p className={style.p}><strong>Nome:</strong>{person.nome}</p>
+          <p className={style.p}><strong>Estado: </strong>{person.estado}</p>
+          <p className={style.p}><strong>Especie: </strong>{person.especie}</p>
+          <p className={style.p}><strong>Gênero: </strong>{person.genero}</p>
+          <p className={style.p}><strong>Imagem: </strong>{person.image}</p>
 
         </div>
         <div>
-          <button className={style.remove} onClick={() => deletePers(personagem.id)}>Excluir</button>
+          <button className={style.remove} onClick={() => deletePers(person.id)}>Excluir</button>
         </div>
       </div>
     </div>
