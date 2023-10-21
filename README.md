@@ -1,5 +1,47 @@
+## Repositório do projeto intermediário
+Bem-vindo ao repositório do projeto intermediário! Neste repositório, você encontrará um site será possível ver alguns personagens do seriado "Ricky and Morty" e cadastrar novos personagens utilizando React JS.
+
+## Documentação
+Caso deseje saber mais sobre os detalhes das integrações consulte nossa [documentação](https://rickandmortyapi.com/documentation) OpenAPI.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Passo a passo
+### Criação do projeto
+``` bash
+npx create-next-app@latest
+
+nome-do-projeto
+Typescript: No
+ESLint: No
+Tailwind CSS: No
+/src: No
+App Router: Yes
+Alias: No
+```
+### Entrar na pasta com o nome do projeto
+``` bash
+cd nome-do-projeto
+```
+### Instalação das dependências
+``` bash
+npm install
+```
+### Execução do projeto em modo desenvolvedor
+``` bash
+npm run dev
+```
+- [x] Limpeza de arquivos e códigos desnecessários
+- [x] Mudar os arquivos necessários para ".jsx"
+- [x] Criação da pasta "Models" com os arquivos "listPerso.js" e "persons.js"
+- [x] Criação das classes nos arquivos "listPerso.js" e "persons.js"
+- [x] 
+- [x] Mudar os arquivos necessários para ".jsx"
+- [x] Mudar os arquivos necessários para ".jsx"
+- [x] Mudar os arquivos necessários para ".jsx"
+- [x] Mudar os arquivos necessários para ".jsx"
+- [x] Mudar os arquivos necessários para ".jsx"
+- [x] Mudar os arquivos necessários para ".jsx"
 ## Getting Started
 
 First, run the development server:
@@ -20,7 +62,6 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -29,8 +70,3 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
