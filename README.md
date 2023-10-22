@@ -31,20 +31,22 @@ npm install
 ``` bash
 npm run dev
 ```
-- [x] Limpeza de arquivos e códigos desnecessários
-- [x] Mudar os arquivos necessários para ".jsx"
-- [x] Criação da pasta "Models" com os arquivos "listPerso.js" e "persons.js"
-- [x] Criação das classes nos arquivos "listPerso.js" e "persons.js"
-- [x] 
-- [x] Mudar os arquivos necessários para ".jsx"
-- [x] Mudar os arquivos necessários para ".jsx"
-- [x] Mudar os arquivos necessários para ".jsx"
-- [x] Mudar os arquivos necessários para ".jsx"
-- [x] Mudar os arquivos necessários para ".jsx"
-- [x] Mudar os arquivos necessários para ".jsx"
-## Getting Started
+- [x] Limpeza de arquivos e códigos desnecessários;
+- [x] Mudar os arquivos necessários para ".jsx";
+- [x] Instalar o Axios, usando o comando "npm install axios" no terminal;
+- [x] Criação da pasta "data" com o arquivo "charactersApi.js";
+- [x] No arquivo "charactersApi.js", usamos o Axios para chamar os dados da API;
+- [x] Na página Home, colocamos os dados necessários da API;
+- [x] Criação da pasta "Models" com os arquivos "listPerso.js" e "persons.js";
+- [x] Criação das classes nos arquivos "listPerso.js" e "persons.js";
+- [x] Criação da pasta "components" com os arquivos "form.jsx" e "personagem.jsx";
+- [x]No arquivo "personagem.jsx", criação da exibição do cadastro pronto;
+- [x]No arquivo "form.jsx", criação da exibição do formulário e chamamos o componente "personagem.jsx";
+- [x] Criação da pasta príncipal "cadastro" com o arquivo "page.jsx" e chamamos o componente "form.jsx" nela;
+- [x] Iniciar a estilização da página Home;
+## Acessar o site
 
-First, run the development server:
+Primeiro, execute o servidor de desenvolvimento:
 
 ```bash
 npm run dev
@@ -56,17 +58,17 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) com seu navegador para ver o resultado.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Você pode começar a editar a página modificando `app/page.js`. A página é atualizada automaticamente conforme você edita o arquivo.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Este projeto usa [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) para otimizar e carregar automaticamente o Inter, uma fonte personalizada do Google.
 
 
-To learn more about Next.js, take a look at the following resources:
+Para saber mais sobre Next.js, dê uma olhada nos seguintes recursos:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js Documentation](https://nextjs.org/docs) - aprenda sobre os recursos e API do Next.js.
+- [Learn Next.js](https://nextjs.org/learn) -um tutorial interativo do Next.js.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Você pode conferir [the Next.js GitHub repository](https://github.com/vercel/next.js/) - seus comentários e contribuições são bem-vindos!
 
