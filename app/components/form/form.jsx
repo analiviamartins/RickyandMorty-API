@@ -24,6 +24,14 @@ const cadastro = ({ }) => {
 
     };
 
+    isURLValida = (image) => {
+        if(image.match(/\.(jpeg|jpg|gif|png)$/) != null){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     return (
         <div className={style.app}>
@@ -32,7 +40,7 @@ const cadastro = ({ }) => {
             <input value={estado} className={style.input} onChange={(e) => setEstado(e.target.value)} type="text" placeholder='Digite o estado (vivo, morto ...)' />
             <input value={especie} className={style.input} onChange={(e) => setEspecie(e.target.value)} type="text" placeholder='Digite a espécie' />
             <input value={genero} className={style.input} onChange={(e) => setGenero(e.target.value)} type="text" placeholder='Digite o gênero' />
-            <input value={image} className={style.input} onChange={(e) => setImage(e.target.value)} type="text" placeholder='Link da imagem' />
+            <input isURLValida={isURLValida} value={image} className={style.input} onChange={(e) => setImage(e.target.value)} type="text" placeholder='Link da imagem' />
             <button className={style.button} type='button' onClick={handleSubmit}>Cadastrar</button>
             <div className={style.lista}>
                 {listaPersonagens.listaPerso.map((person) => (
