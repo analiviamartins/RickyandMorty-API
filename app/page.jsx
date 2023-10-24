@@ -11,7 +11,16 @@ const listaPersonagens = new listPerso();
 function page() {
   const [listPerso, setListaPerso] = useState([]);
   const [dadosApi, SetDadosApi] = useState(null);
+  const [editar, setEditar] = useState(false);
 
+  const editarPers = (person) => {
+    setNome(person.nome);
+    setEstado(person.estado);
+    setEspecie(person.especie);
+    setGenero(person.genero);
+    setImage(person.image);
+    setEditar(true);
+  }
 
   useEffect(() => {
     const rickmortyFetch = async () => {
@@ -124,7 +133,7 @@ function page() {
                   <p className={style.p}><strong>Gênero: </strong>{person.genero}</p>
                   <p className={style.p}><strong>Imagem: </strong>{person.image}</p>
                   <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
-                  <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
+                  <button className={style.edit} onClick={() => editarPers(person)}>Editar</button>
                 </div>
 
               </div>
