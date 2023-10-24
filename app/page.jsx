@@ -7,7 +7,9 @@ import PopUp from '../app/components/PopUp/popUp';
 
 
 const listaPersonagens = new listPerso();
-function page(person, deletePers) {
+
+function page() {
+  const [listPerso, setListaPerso] = useState([]); 
   const [dadosApi, SetDadosApi] = useState(null);
 
 
@@ -47,6 +49,12 @@ function page(person, deletePers) {
       setEspecie("");
       setGenero("");
       setImage("");
+    };
+    
+    const deletePers = (person) => {
+      listaPersonagens.deletePers(person);
+      setListaPerso(listaPersonagens.getListaPerso());
+    }
       handleShowPopup("Cadastro concluído", "success");
     } catch (error) {
       handleShowPopup("Erro aleatório", "error");
@@ -61,7 +69,6 @@ function page(person, deletePers) {
       setShowPopup(false)
     }, 3000)
   }
-
 
   return (
     <div className="container">
@@ -107,19 +114,20 @@ function page(person, deletePers) {
           />
         )}
         <div className={style.lista}>
-          {listaPersonagens.listaPerso.map((person) => (
-            <div className={style.card}>
-              <div className={style.content} >
-                <p className={style.p}><strong>Nome:</strong>{person.nome}</p>
-                <p className={style.p}><strong>Estado: </strong>{person.estado}</p>
-                <p className={style.p}><strong>Especie: </strong>{person.especie}</p>
-                <p className={style.p}><strong>Gênero: </strong>{person.genero}</p>
-                <p className={style.p}><strong>Imagem: </strong>{person.image}</p>
-
-              </div>
-              <div>
-                <button className={style.remove} onClick={() => deletePers(person.id)}>Excluir</button>
-              </div>
+                {listaPersonagens.listaPerso.map((person) => (
+                    <div className={style.card}>
+                    <div className={style.content} >
+                      <p className={style.p}><strong>Nome:</strong>{person.nome}</p>
+                      <p className={style.p}><strong>Estado: </strong>{person.estado}</p>
+                      <p className={style.p}><strong>Especie: </strong>{person.especie}</p>
+                      <p className={style.p}><strong>Gênero: </strong>{person.genero}</p>
+                      <p className={style.p}><strong>Imagem: </strong>{person.image}</p>
+                      <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
+                      <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
+                    </div>
+                    
+                  </div>
+                ))}
             </div>
           ))}
         </div>

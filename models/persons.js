@@ -11,10 +11,7 @@ class Perso {
     generateId() {
         return Math.floor(Math.random() * 10000);
     }
-    deleteCar = (id) => {
-        listaCarros.deleteCar(id);
-        setCarros(listaCarros.cars);
-      }
+    
 }
 
 export default Perso;
