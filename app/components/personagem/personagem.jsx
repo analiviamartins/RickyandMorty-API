@@ -1,6 +1,11 @@
 import React from 'react'
 import style from "../personagem/personagem.module.css"
 
+const deletePers = (id) => {
+  instanciaLista.deletePers(id);
+  setListaPers(instanciaLista.getListaPers());
+}
+
 const personagem = ({ person, deletePers }) => {
   return (
     <div >
@@ -14,7 +19,7 @@ const personagem = ({ person, deletePers }) => {
 
         </div>
         <div>
-          <button className={style.remove} onClick={() => deletePers(person.id)}>Excluir</button>
+          <button className={style.remove} onClick={() => deletePers()}>Excluir</button>
         </div>
       </div>
     </div>

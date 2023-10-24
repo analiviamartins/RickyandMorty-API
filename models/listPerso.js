@@ -1,4 +1,4 @@
-import Persos from "./persons"
+import persos from "./persons"
 
 class Persos {
     constructor() {
@@ -6,13 +6,14 @@ class Persos {
     }
 
     add(nome, estado, especie, genero, image) {
-        const person = new Persos(nome, estado, especie, genero, image)
+        const person = new persos(nome, estado, especie, genero, image)
         this.listaPerso.push(person);
     }
 
     
     deletePers(id) {
-        this.listaPerso = this.pedidos.find(pedido = pedido.id !== id);
+        this.listaPerso = this.listaPerso.filter(pers = pers.id !== id.id);
+        console.log(this.listaPerso)
     }
 }
 
