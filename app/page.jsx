@@ -1,8 +1,13 @@
 'use client'
 import React, { useEffect, useState } from "react"
 import personagens from "@/data/charactersApi";
+import listPerso from '../models/listPerso'
+import style from '../app/page.module.css'
 
-function page() {
+
+
+const listaPersonagens = new listPerso();
+function page(  person, deletePers ) {
   const [dadosApi, SetDadosApi] = useState(null);
 
   useEffect(() => {
@@ -19,6 +24,23 @@ function page() {
     rickmortyFetch();
 
   }, []);
+  
+    const [nome, setNome] = useState("");
+    const [estado, setEstado] = useState("");
+    const [especie, setEspecie] = useState("");
+    const [genero, setGenero] = useState("");
+    const [image, setImage] = useState("");
+  
+    const handleSubmit = () => {
+      if (!nome || !estado || !especie || !genero || !image) return;
+      listaPersonagens.add(nome, estado, especie, genero, image);
+      setNome("");
+      setEstado("");
+      setEspecie("");
+      setGenero("");
+      setImage("");
+    };
+
   return (
     <div className="container">
       <div id="img-logo">
@@ -34,13 +56,13 @@ function page() {
               <img src={personagens.image} width={150} height={130} />
               <p>
                 {personagens.status}
-               </p>
-               <p>
-               {personagens.species}
-               </p>
-               <p>
+              </p>
+              <p>
+                {personagens.species}
+              </p>
+              <p>
                 {personagens.gender}
-               </p>
+              </p>
             </div>
           ))
         )
@@ -48,7 +70,34 @@ function page() {
             <h2>Carregando...</h2>
           )
       }
+      <div className={style.app}>
+        <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
+        <input value={nome} className={style.input} onChange={(e) => setNome(e.target.value)} type="text" placeholder='Digite o nome' />
+        <input value={estado} className={style.input} onChange={(e) => setEstado(e.target.value)} type="text" placeholder='Digite o estado (vivo, morto ...)' />
+        <input value={especie} className={style.input} onChange={(e) => setEspecie(e.target.value)} type="text" placeholder='Digite a espécie' />
+        <input value={genero} className={style.input} onChange={(e) => setGenero(e.target.value)} type="text" placeholder='Digite o gênero' />
+        <input value={image} className={style.input} onChange={(e) => setImage(e.target.value)} type="text" placeholder='Link da imagem' />
+        <button className={style.button} type='button' onClick={handleSubmit}>Cadastrar</button>
+        <div className={style.lista}>
+                {listaPersonagens.listaPerso.map((person) => (
+                    <div className={style.card}>
+                    <div className={style.content} >
+                      <p className={style.p}><strong>Nome:</strong>{person.nome}</p>
+                      <p className={style.p}><strong>Estado: </strong>{person.estado}</p>
+                      <p className={style.p}><strong>Especie: </strong>{person.especie}</p>
+                      <p className={style.p}><strong>Gênero: </strong>{person.genero}</p>
+                      <p className={style.p}><strong>Imagem: </strong>{person.image}</p>
+            
+                    </div>
+                    <div>
+                      <button className={style.remove} onClick={() => deletePers(person.id)}>Excluir</button>
+                    </div>
+                  </div>
+                ))}
+            </div>
+      </div>
     </div>
   )
-}
+          }
+
 export default page;
