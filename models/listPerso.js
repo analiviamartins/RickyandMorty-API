@@ -1,3 +1,4 @@
+"use client"
 import Perso from "./persons"
 
 class Persos {
@@ -10,9 +11,12 @@ class Persos {
         this.listaPerso.push(person);
     }
 
-    
-    deletePers(id) {
-        return this.listaPerso = this.listaPerso.filter(perso => perso.id !== id);
+    getListaPerso() {
+        return this.listaPerso;
+    }
+
+    deletePers(person) {
+        this.listaPerso = this.listaPerso.filter(perso => perso.id !== person.id);
     }
 }
 

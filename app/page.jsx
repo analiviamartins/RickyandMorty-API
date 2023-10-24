@@ -7,7 +7,9 @@ import style from '../app/page.module.css'
 
 
 const listaPersonagens = new listPerso();
-function page(  person, deletePers ) {
+
+function page() {
+  const [listPerso, setListaPerso] = useState([]); 
   const [dadosApi, SetDadosApi] = useState(null);
 
   useEffect(() => {
@@ -40,6 +42,11 @@ function page(  person, deletePers ) {
       setGenero("");
       setImage("");
     };
+    
+    const deletePers = (person) => {
+      listaPersonagens.deletePers(person);
+      setListaPerso(listaPersonagens.getListaPerso());
+    }
 
   return (
     <div className="container">
@@ -87,11 +94,10 @@ function page(  person, deletePers ) {
                       <p className={style.p}><strong>Especie: </strong>{person.especie}</p>
                       <p className={style.p}><strong>Gênero: </strong>{person.genero}</p>
                       <p className={style.p}><strong>Imagem: </strong>{person.image}</p>
-            
+                      <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
+                      <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
                     </div>
-                    <div>
-                      <button className={style.remove} onClick={() => deletePers(person.id)}>Excluir</button>
-                    </div>
+                    
                   </div>
                 ))}
             </div>
