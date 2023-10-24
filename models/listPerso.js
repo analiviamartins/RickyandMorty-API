@@ -12,7 +12,7 @@ class Persos {
 
     
     deletePers(id) {
-        return this.listaPerso = this.listaPerso.filter(perso => perso.id !== id);
+        this.listaPerso = this.pedidos.find(pedido = pedido.id !== id);
     }
 }
 
