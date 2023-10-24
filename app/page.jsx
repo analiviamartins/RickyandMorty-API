@@ -41,7 +41,7 @@ function page() {
   const handleSubmit = () => {
     try {
       if (!nome || !estado || !especie || !genero || !image) {
-        return handleShowPopup("Parâmetros incompletos", "error");
+        return handleShowPopup("Parâmetros incompletos", "error")
       }
       listaPersonagens.add(nome, estado, especie, genero, image);
       setNome("");
@@ -60,7 +60,13 @@ function page() {
       setListaPerso(listaPersonagens.getListaPerso());
     }
     
-
+    const isURLValida = (url) => {
+      if(url.match(/\.(jpeg|jpg|gif|png)$/) != null){
+          return true;
+      } else {
+          return false;
+      }
+  }
 
     const handleShowPopup = (message, type) => {
       setPopupMessage(message)
