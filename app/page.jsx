@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import personagens from "@/data/charactersApi";
 import listPerso from '../models/listPerso'
 import style from '../app/page.module.css'
-
+import PopUp from '../app/components/PopUp/popUp';
 
 
 const listaPersonagens = new listPerso();
@@ -11,6 +11,7 @@ const listaPersonagens = new listPerso();
 function page() {
   const [listPerso, setListaPerso] = useState([]); 
   const [dadosApi, SetDadosApi] = useState(null);
+
 
   useEffect(() => {
     const rickmortyFetch = async () => {
@@ -26,15 +27,22 @@ function page() {
     rickmortyFetch();
 
   }, []);
-  
-    const [nome, setNome] = useState("");
-    const [estado, setEstado] = useState("");
-    const [especie, setEspecie] = useState("");
-    const [genero, setGenero] = useState("");
-    const [image, setImage] = useState("");
-  
-    const handleSubmit = () => {
-      if (!nome || !estado || !especie || !genero || !image) return;
+
+  const [nome, setNome] = useState("");
+  const [estado, setEstado] = useState("");
+  const [especie, setEspecie] = useState("");
+  const [genero, setGenero] = useState("");
+  const [image, setImage] = useState("");
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [popupType, setPopupType] = useState('');
+
+  const handleSubmit = () => {
+    try {
+      if (!nome || !estado || !especie || !genero || !image){
+        return handleShowPopup("Parâmetros incompletos", "error");
+      }
       listaPersonagens.add(nome, estado, especie, genero, image);
       setNome("");
       setEstado("");
@@ -47,6 +55,20 @@ function page() {
       listaPersonagens.deletePers(person);
       setListaPerso(listaPersonagens.getListaPerso());
     }
+      handleShowPopup("Cadastro concluído", "success");
+    } catch (error) {
+      handleShowPopup("Erro aleatório", "error");
+    }
+  };
+
+  const handleShowPopup = (message, type) => {
+    setPopupMessage(message)
+    setPopupType(type)
+    setShowPopup(true)
+    setTimeout(() => {
+      setShowPopup(false)
+    }, 3000)
+  }
 
   return (
     <div className="container">
@@ -85,6 +107,12 @@ function page() {
         <input value={genero} className={style.input} onChange={(e) => setGenero(e.target.value)} type="text" placeholder='Digite o gênero' />
         <input value={image} className={style.input} onChange={(e) => setImage(e.target.value)} type="text" placeholder='Link da imagem' />
         <button className={style.button} type='button' onClick={handleSubmit}>Cadastrar</button>
+        {showPopup && (
+          <PopUp
+            message={popupMessage}
+            type={popupType}
+          />
+        )}
         <div className={style.lista}>
                 {listaPersonagens.listaPerso.map((person) => (
                     <div className={style.card}>
@@ -101,9 +129,11 @@ function page() {
                   </div>
                 ))}
             </div>
+          ))}
+        </div>
       </div>
     </div>
   )
-          }
+}
 
 export default page;
