@@ -3,7 +3,7 @@ import { useState } from 'react'
 import style from '../form/form.module.css'
 import listPerso from '../../../models/listPerso'
 import Personagem from '../personagem/personagem'
-
+import PopUp from '../PopUp/popUp';
 
 const listaPersonagens = new listPerso();
 const cadastro = ({ }) => {
@@ -13,6 +13,20 @@ const cadastro = ({ }) => {
     const [genero, setGenero] = useState("");
     const [image, setImage] = useState("");
 
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupMessage, setPopupMessage] = useState('');
+    const [popupType, setPopupType] = useState('');
+
+    function handleShowPopup(message, type, time) {
+        setPopupMessage(message)
+        setPopupType(type)
+        setShowPopup(true)
+        setTimeout(() => {
+            setShowPopup(false)
+        }, time)
+    }
+
+
     const handleSubmit = () => {
         if (!nome || !estado || !especie || !genero || !image) return;
         listaPersonagens.add(nome, estado, especie, genero, image);
@@ -21,7 +35,7 @@ const cadastro = ({ }) => {
         setEspecie("");
         setGenero("");
         setImage("");
-
+        handleShowPopup();
     };
 
 

@@ -1,4 +1,4 @@
-import Persos from "./persons"
+import Perso from "./persons"
 
 class Persos {
     constructor() {
@@ -6,7 +6,7 @@ class Persos {
     }
 
     add(nome, estado, especie, genero, image) {
-        const person = new Persos(nome, estado, especie, genero, image)
+        const person = new Perso(nome, estado, especie, genero, image)
         this.listaPerso.push(person);
     }
 
