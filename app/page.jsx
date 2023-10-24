@@ -9,7 +9,7 @@ import PopUp from '../app/components/PopUp/popUp';
 const listaPersonagens = new listPerso();
 
 function page() {
-  const [listPerso, setListaPerso] = useState([]); 
+  const [listPerso, setListaPerso] = useState([]);
   const [dadosApi, SetDadosApi] = useState(null);
 
 
@@ -40,7 +40,7 @@ function page() {
 
   const handleSubmit = () => {
     try {
-      if (!nome || !estado || !especie || !genero || !image){
+      if (!nome || !estado || !especie || !genero || !image) {
         return handleShowPopup("Parâmetros incompletos", "error");
       }
       listaPersonagens.add(nome, estado, especie, genero, image);
@@ -49,91 +49,89 @@ function page() {
       setEspecie("");
       setGenero("");
       setImage("");
+      handleShowPopup("Cadastro concluído", "success")
+      } catch (error) {
+        handleShowPopup("Erro aleatório", "error");
+      }
     };
-    
+
     const deletePers = (person) => {
       listaPersonagens.deletePers(person);
       setListaPerso(listaPersonagens.getListaPerso());
     }
-      handleShowPopup("Cadastro concluído", "success");
-    } catch (error) {
-      handleShowPopup("Erro aleatório", "error");
+    
+
+
+    const handleShowPopup = (message, type) => {
+      setPopupMessage(message)
+      setPopupType(type)
+      setShowPopup(true)
+      setTimeout(() => {
+        setShowPopup(false)
+      }, 3000)
     }
-  };
 
-  const handleShowPopup = (message, type) => {
-    setPopupMessage(message)
-    setPopupType(type)
-    setShowPopup(true)
-    setTimeout(() => {
-      setShowPopup(false)
-    }, 3000)
-  }
-
-  return (
-    <div className="container">
-      <div id="img-logo">
-        <img src="/Rick-and-Morty.png" width={900} height={500} />
-      </div>
-      {
-        dadosApi ? (
-          dadosApi.results.map((personagens, index) => (
-            <div key={index} className="card">
-              <h2>
-                {personagens.name}
-              </h2>
-              <img src={personagens.image} width={150} height={130} />
-              <p>
-                {personagens.status}
-              </p>
-              <p>
-                {personagens.species}
-              </p>
-              <p>
-                {personagens.gender}
-              </p>
-            </div>
-          ))
-        )
-          : (
-            <h2>Carregando...</h2>
+    return (
+      <div className="container">
+        <div id="img-logo">
+          <img src="/Rick-and-Morty.png" width={900} height={500} />
+        </div>
+        {
+          dadosApi ? (
+            dadosApi.results.map((personagens, index) => (
+              <div key={index} className="card">
+                <h2>
+                  {personagens.name}
+                </h2>
+                <img src={personagens.image} width={150} height={130} />
+                <p>
+                  {personagens.status}
+                </p>
+                <p>
+                  {personagens.species}
+                </p>
+                <p>
+                  {personagens.gender}
+                </p>
+              </div>
+            ))
           )
-      }
-      <div className={style.app}>
-        <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
-        <input value={nome} className={style.input} onChange={(e) => setNome(e.target.value)} type="text" placeholder='Digite o nome' />
-        <input value={estado} className={style.input} onChange={(e) => setEstado(e.target.value)} type="text" placeholder='Digite o estado (vivo, morto ...)' />
-        <input value={especie} className={style.input} onChange={(e) => setEspecie(e.target.value)} type="text" placeholder='Digite a espécie' />
-        <input value={genero} className={style.input} onChange={(e) => setGenero(e.target.value)} type="text" placeholder='Digite o gênero' />
-        <input value={image} className={style.input} onChange={(e) => setImage(e.target.value)} type="text" placeholder='Link da imagem' />
-        <button className={style.button} type='button' onClick={handleSubmit}>Cadastrar</button>
-        {showPopup && (
-          <PopUp
-            message={popupMessage}
-            type={popupType}
-          />
-        )}
-        <div className={style.lista}>
-                {listaPersonagens.listaPerso.map((person) => (
-                    <div className={style.card}>
-                    <div className={style.content} >
-                      <p className={style.p}><strong>Nome:</strong>{person.nome}</p>
-                      <p className={style.p}><strong>Estado: </strong>{person.estado}</p>
-                      <p className={style.p}><strong>Especie: </strong>{person.especie}</p>
-                      <p className={style.p}><strong>Gênero: </strong>{person.genero}</p>
-                      <p className={style.p}><strong>Imagem: </strong>{person.image}</p>
-                      <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
-                      <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
-                    </div>
-                    
-                  </div>
-                ))}
-            </div>
-          ))}
+            : (
+              <h2>Carregando...</h2>
+            )
+        }
+        <div className={style.app}>
+          <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
+          <input value={nome} className={style.input} onChange={(e) => setNome(e.target.value)} type="text" placeholder='Digite o nome' />
+          <input value={estado} className={style.input} onChange={(e) => setEstado(e.target.value)} type="text" placeholder='Digite o estado (vivo, morto ...)' />
+          <input value={especie} className={style.input} onChange={(e) => setEspecie(e.target.value)} type="text" placeholder='Digite a espécie' />
+          <input value={genero} className={style.input} onChange={(e) => setGenero(e.target.value)} type="text" placeholder='Digite o gênero' />
+          <input value={image} className={style.input} onChange={(e) => setImage(e.target.value)} type="text" placeholder='Link da imagem' />
+          <button className={style.button} type='button' onClick={handleSubmit}>Cadastrar</button>
+          {showPopup && (
+            <PopUp
+              message={popupMessage}
+              type={popupType}
+            />
+          )}
+          <div className={style.lista}>
+            {listaPersonagens.listaPerso.map((person) => (
+              <div className={style.card}>
+                <div className={style.content} >
+                  <p className={style.p}><strong>Nome:</strong>{person.nome}</p>
+                  <p className={style.p}><strong>Estado: </strong>{person.estado}</p>
+                  <p className={style.p}><strong>Especie: </strong>{person.especie}</p>
+                  <p className={style.p}><strong>Gênero: </strong>{person.genero}</p>
+                  <p className={style.p}><strong>Imagem: </strong>{person.image}</p>
+                  <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
+                  <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
+                </div>
+
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  )
-}
-
-export default page;
+    )
+  };
+  export default page;
