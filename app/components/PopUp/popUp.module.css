@@ -17,3 +17,7 @@
 .error{
     background-color: rgb(215, 19, 19);
 }
+
+.success {
+    background-color: rgb(127, 252, 118);
+}
