@@ -103,6 +103,8 @@ function page() {
                 <p>
                   {personagens.gender}
                 </p>
+                <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
+                <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
               </div>
             ))
           )
@@ -130,7 +132,7 @@ function page() {
               <div className={style.card}>
                 <div className={style.content} >
                   <h2 className={style.p}>{person.nome}</h2>
-                  <img src={person.image} alt={person.nome} width={150} height={150}/>
+                  <img src={person.image} alt={person.nome} width={150} height={130}/>
                   <p className={style.p}><strong>Estado: </strong>{person.estado}</p>
                   <p className={style.p}><strong>Especie: </strong>{person.especie}</p>
                   <p className={style.p}><strong>Gênero: </strong>{person.genero}</p>
