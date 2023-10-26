@@ -7,40 +7,50 @@ import PopUp from '../app/components/PopUp/popUp';
 
 
 const listaPersonagens = new listPerso();
-
+console.log(listaPersonagens)
 function page() {
   const [listPerso, setListaPerso] = useState([]);
   const [dadosApi, SetDadosApi] = useState(null);
 
   const editPers = (person) => {
-    setNome(person.nome);
-    setEstado(person.estado);
-    setEspecie(person.especie);
-    setGenero(person.genero);
+    setNome(person.name);
+    setEstado(person.status);
+    setEspecie(person.species);
+    setGenero(person.gender);
     setImage(person.image);
     listaPersonagens.deletePers(person);
     setListaPerso(listaPersonagens.getListaPerso());
   }
 
   useEffect(() => {
+    let ignore = false;
+
     const rickmortyFetch = async () => {
       try {
-        const dados = await personagens();
+        const dados = await personagens()
+        if (!ignore) {
         SetDadosApi(dados);
-        //console.log(dados);
+        listaPersonagens.addApiData(dados);
+        SetDadosApi(listaPersonagens.getListaPerso());
+        }
       } catch (e) {
         throw e;
       }
-    }
-
+    };
     rickmortyFetch();
+    
+    return () => {
+      ignore = true;
+    };
 
   }, []);
 
-  const [nome, setNome] = useState("");
-  const [estado, setEstado] = useState("");
-  const [especie, setEspecie] = useState("");
-  const [genero, setGenero] = useState("");
+  
+
+  const [name, setNome] = useState("");
+  const [status, setEstado] = useState("");
+  const [species, setEspecie] = useState("");
+  const [gender, setGenero] = useState("");
   const [image, setImage] = useState("");
 
   const [showPopup, setShowPopup] = useState(false);
@@ -49,10 +59,10 @@ function page() {
 
   const handleSubmit = () => {
     try {
-      if (!nome || !estado || !especie || !genero || !image) {
+      if (!name || !status || !species || !gender || !image) {
         return handleShowPopup("Parâmetros incompletos", "error")
       }
-      listaPersonagens.add(nome, estado, especie, genero, image);
+      listaPersonagens.add(name, status, species, gender, image);
       setNome("");
       setEstado("");
       setEspecie("");
@@ -62,6 +72,8 @@ function page() {
       } catch (error) {
         handleShowPopup("Erro aleatório", "error");
       }
+
+      console.log(handleSubmit)
     };
 
     const deletePers = (person) => {
@@ -85,55 +97,32 @@ function page() {
           <img src="/Rick-and-Morty.png" width={900} height={500} />
         </div>
       <div className={style.container}>
-
-        {
-          dadosApi ? (
-            dadosApi.results.map((personagens, index) => (
-              <div key={index} className={style.card}>
-                <h2>
-                  {personagens.name}
-                </h2>
-                <img src={personagens.image} width={150} height={130} />
-                <p>
-                  {personagens.status}
-                </p>
-                <p>
-                  {personagens.species}
-                </p>
-                <p>
-                  {personagens.gender}
-                </p>
-              </div>
-            ))
-          )
-            : (
-              <h2>Carregando...</h2>
-            )
-        }
+        
+      
         <div className={style.app}>
           <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
-          <input value={nome} className={style.input} onChange={(e) => setNome(e.target.value)} type="text" placeholder='Digite o nome' />
-          <input value={estado} className={style.input} onChange={(e) => setEstado(e.target.value)} type="text" placeholder='Digite o estado (vivo, morto ...)' />
-          <input value={especie} className={style.input} onChange={(e) => setEspecie(e.target.value)} type="text" placeholder='Digite a espécie' />
-          <input value={genero} className={style.input} onChange={(e) => setGenero(e.target.value)} type="text" placeholder='Digite o gênero' />
+          <input value={name} className={style.input} onChange={(e) => setNome(e.target.value)} type="text" placeholder='Digite o nome' />
+          <input value={status} className={style.input} onChange={(e) => setEstado(e.target.value)} type="text" placeholder='Digite o estado (vivo, morto ...)' />
+          <input value={species} className={style.input} onChange={(e) => setEspecie(e.target.value)} type="text" placeholder='Digite a espécie' />
+          <input value={gender} className={style.input} onChange={(e) => setGenero(e.target.value)} type="text" placeholder='Digite o gênero' />
           <input value={image} className={style.input} onChange={(e) => setImage(e.target.value)} type="text" placeholder='Link da imagem' />
           <button className={style.button} type='button' onClick={handleSubmit}>Cadastrar</button>
-          {showPopup && (
+          <p>{showPopup && (
             <PopUp
               message={popupMessage}
               type={popupType}
             />
-          )}
+          )}</p>
           </div>
           <div className={style.lista}>
             {listaPersonagens.listaPerso.map((person) => (
               <div className={style.card}>
                 <div className={style.content} >
-                  <h2 className={style.p}>{person.nome}</h2>
-                  <img src={person.image} alt={person.nome} width={150} height={150}/>
-                  <p className={style.p}><strong>Estado: </strong>{person.estado}</p>
-                  <p className={style.p}><strong>Especie: </strong>{person.especie}</p>
-                  <p className={style.p}><strong>Gênero: </strong>{person.genero}</p>
+                  <h2 className={style.p}>{person.name}</h2>
+                  <img src={person.image} alt={person.name} width={150} height={150}/>
+                  <p className={style.p}><strong>Estado: </strong>{person.status}</p>
+                  <p className={style.p}><strong>Especie: </strong>{person.species}</p>
+                  <p className={style.p}><strong>Gênero: {person.gender} </strong></p>
                   <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
                   <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
                 </div>
