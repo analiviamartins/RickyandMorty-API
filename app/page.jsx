@@ -94,6 +94,7 @@ function page() {
                   {personagens.name}
                 </h2>
                 <img src={personagens.image} width={150} height={130} />
+                <div className={style.text}>
                 <p>
                   {personagens.status}
                 </p>
@@ -103,6 +104,7 @@ function page() {
                 <p>
                   {personagens.gender}
                 </p>
+                </div>
               </div>
             ))
           )
