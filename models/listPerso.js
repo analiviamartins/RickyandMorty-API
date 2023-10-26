@@ -4,11 +4,19 @@ import Perso from "./persons"
 class Persos {
     constructor() {
         this.listaPerso = [];
+        
     }
 
-    add(nome, estado, especie, genero, image) {
-        const person = new Perso(nome, estado, especie, genero, image)
+    add(name, status, species, gender, image) {
+        const person = new Perso(name, status, species, gender, image)
         this.listaPerso.push(person);
+
+    }
+    
+    addApiData(dados) {
+        this.listaPerso = this.listaPerso.concat(dados)
+
+            
     }
 
     getListaPerso() {
@@ -18,6 +26,7 @@ class Persos {
     deletePers(person) {
         this.listaPerso = this.listaPerso.filter(perso => perso.id !== person.id);
     }
+
 }
 
 export default Persos;
