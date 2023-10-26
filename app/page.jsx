@@ -22,6 +22,16 @@ function page() {
     setEditar(true);
   }
 
+  const editPers = (person) => {
+    setNome(person.nome);
+    setEstado(person.estado);
+    setEspecie(person.especie);
+    setGenero(person.genero);
+    setImage(person.image);
+    listaPersonagens.deletePers(person);
+    setListaPerso(listaPersonagens.getListaPerso());
+  }
+
   useEffect(() => {
     const rickmortyFetch = async () => {
       try {
