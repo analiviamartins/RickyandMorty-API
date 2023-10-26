@@ -69,13 +69,6 @@ function page() {
       setListaPerso(listaPersonagens.getListaPerso());
     }
     
-    const isURLValida = (url) => {
-      if(url.match(/\.(jpeg|jpg|gif|png)$/) != null){
-          return true;
-      } else {
-          return false;
-      }
-  }
 
     const handleShowPopup = (message, type) => {
       setPopupMessage(message)
@@ -133,15 +126,15 @@ function page() {
             {listaPersonagens.listaPerso.map((person) => (
               <div className={style.card}>
                 <div className={style.content} >
-                  <p className={style.p}><strong>Nome:</strong>{person.nome}</p>
+                  <h2 className={style.p}>{person.nome}</h2>
+                  <img src={person.image} alt={person.nome} width={150} height={150}/>
                   <p className={style.p}><strong>Estado: </strong>{person.estado}</p>
                   <p className={style.p}><strong>Especie: </strong>{person.especie}</p>
                   <p className={style.p}><strong>Gênero: </strong>{person.genero}</p>
-                  <p className={style.p}><strong>Imagem: </strong>{person.image}</p>
                   <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
                   <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
                 </div>
-
+                
               </div>
             ))}
           </div>
