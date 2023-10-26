@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from "react"
-import personagens from "@/data/charactersApi";
+import personagens, {characpage} from "@/data/charactersApi";
 import listPerso from '../models/listPerso'
 import style from '../app/page.module.css'
 import PopUp from '../app/components/PopUp/popUp';
@@ -11,6 +11,11 @@ console.log(listaPersonagens)
 function page() {
   const [listPerso, setListaPerso] = useState([]);
   const [dadosApi, SetDadosApi] = useState(null);
+  const [pageNumber, setPageNumber] = useState(0);
+  const next = (pages)=>{
+    setPageNumber(pageNumber+pages)
+    characpage(pageNumber);
+  }
 
   const editPers = (person) => {
     setNome(person.name);
@@ -43,7 +48,7 @@ function page() {
       ignore = true;
     };
 
-  }, []);
+  }, [pageNumber]);
 
   
 
@@ -97,7 +102,6 @@ function page() {
           <img src="/Rick-and-Morty.png" width={900} height={500} />
         </div>
       <div className={style.container}>
-      
         <div className={style.app}>
           <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
           <input value={name} className={style.input} onChange={(e) => setNome(e.target.value)} type="text" placeholder='Digite o nome' />
@@ -112,6 +116,9 @@ function page() {
               type={popupType}
             />
           )}</p>
+          </div>
+          <div>
+            <button onClick={next}>mudar página</button>
           </div>
           <div className={style.lista}>
             {listaPersonagens.listaPerso.map((person) => (

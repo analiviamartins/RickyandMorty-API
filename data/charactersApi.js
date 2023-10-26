@@ -1,6 +1,11 @@
 import axios from "axios";
 
-const URL_CHARACTERS = 'https://rickandmortyapi.com/api/character'
+let URL_CHARACTERS = 'https://rickandmortyapi.com/api/character/?page'
+
+export function characpage(page){
+    URL_CHARACTERS= `https://rickandmortyapi.com/api/character/?page=${page}`
+    return URL_CHARACTERS;
+}
 
 const personagens = async () => {
     try{
