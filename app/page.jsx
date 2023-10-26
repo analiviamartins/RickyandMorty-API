@@ -85,7 +85,7 @@ function page() {
         {
           dadosApi ? (
             dadosApi.results.map((personagens, index) => (
-              <div key={index} className="card">
+              <div key={index} className={style.card}>
                 <h2>
                   {personagens.name}
                 </h2>
