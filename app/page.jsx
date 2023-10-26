@@ -87,10 +87,12 @@ function page() {
     }
 
     return (
-      <div className="container">
-        <div id="img-logo">
+      <div className={style.body}>
+        <div className={style.imgLogo}>
           <img src="/Rick-and-Morty.png" width={900} height={500} />
         </div>
+      <div className={style.container}>
+
         {
           dadosApi ? (
             dadosApi.results.map((personagens, index) => (
@@ -129,6 +131,7 @@ function page() {
               type={popupType}
             />
           )}
+          </div>
           <div className={style.lista}>
             {listaPersonagens.listaPerso.map((person) => (
               <div className={style.card}>
@@ -146,7 +149,8 @@ function page() {
             ))}
           </div>
         </div>
-      </div>
+      
+    </div>
     )
   };
   export default page;

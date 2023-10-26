@@ -18,7 +18,8 @@
 
 .app {
     max-width: 600px;
-    margin: 0 auto;
+    margin-top: 25px;
+    margin-left: 200px;
     background-color: #1e2a39;
     padding: 20px 30px;
     border-radius: 10px;
@@ -66,7 +67,6 @@
 .lista {
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 1px solid #555;
 }
 
 .card {
@@ -112,12 +112,16 @@
     background-color: #eeffe5bc;
 }
 
-
-.logo {
+.imgLogo{
     width: 100%;
     max-width: 415px;
     height: auto;
-    margin: 0 230px;
+    margin: 0 290px;
     display: block;
-    margin-top: -50px;
 }
+
+.container{
+    align-items: center;
+    margin-left: 200px;
+}
+
