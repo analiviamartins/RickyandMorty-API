@@ -97,7 +97,6 @@ function page() {
           <img src="/Rick-and-Morty.png" width={900} height={500} />
         </div>
       <div className={style.container}>
-        
       
         <div className={style.app}>
           <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
