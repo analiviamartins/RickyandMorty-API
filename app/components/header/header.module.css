@@ -1,0 +1,26 @@
+.div0 {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center; 
+  border-bottom: 4px solid black;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  background-image: url(https://i.gifer.com/origin/2c/2c33a06c92e92048ba2a833398b11c2a_w200.gif);
+  background-size: cover;
+}
+
+.img0 {
+  width: 150px;
+  height: auto;
+  order: 1;
+}
+
+.h1 {
+  font-family: 'Fonte do Rick and Morty', sans-serif;
+  color: black;
+  text-align: center;
+  margin: 0; 
+  font-family: "font_rick";
+}
