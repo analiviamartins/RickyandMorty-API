@@ -6,6 +6,7 @@ import style from '../app/page.module.css'
 import PopUp from '../app/components/PopUp/popUp';
 import Footer from '../app/components/Footer/footer';
 import Link from "next/link";
+import Loading from "./components/loading/Loading";
 
 const listaPersonagens = new listPerso();
 console.log(listaPersonagens)
@@ -120,20 +121,27 @@ function page() {
           )}</p>
           </div>
           <div className={style.lista}>
-            {listaPersonagens.listaPerso.map((person) => (
-              <div className={style.card} style={tema2}>
-                <div className={style.content} >
-                  <h2 className={style.p}>{person.name}</h2>
-                  <img src={person.image} alt={person.name} width={150} height={150}/>
-                  <p className={style.p}><strong>Estado: </strong>{person.status}</p>
-                  <p className={style.p}><strong>Especie: </strong>{person.species}</p>
-                  <p className={style.p}><strong>Gênero: {person.gender} </strong></p>
-                  <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
-                  <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
-                </div>
-                
-              </div>
-            ))}
+            {
+              dadosApi ? (
+                listaPersonagens.listaPerso.map((person) => (
+                  <div className={style.card} style={tema2}>
+                    <div className={style.content} >
+                      <h2 className={style.p}>{person.name}</h2>
+                      <img src={person.image} alt={person.name} width={150} height={150}/>
+                      <p className={style.p}><strong>Estado: </strong>{person.status}</p>
+                      <p className={style.p}><strong>Especie: </strong>{person.species}</p>
+                      <p className={style.p}><strong>Gênero: {person.gender} </strong></p>
+                      <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
+                      <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
+                    </div>
+                    
+                  </div>
+                ))
+              ): (
+              <Loading />
+              )
+            
+            }
           </div>
         </div>
               <Footer />
