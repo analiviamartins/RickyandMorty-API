@@ -1,20 +1,22 @@
 'use client'
-import React, { useEffect, useState, } from "react"
-import personagens from "@/data/charactersApi";
+import React, { useEffect, useState } from "react"
+import personagens, {characpage} from "@/data/charactersApi";
 import listPerso from '../models/listPerso'
 import style from '../app/page.module.css'
 import PopUp from '../app/components/PopUp/popUp';
 import Footer from '../app/components/Footer/footer';
 import Link from "next/link";
 
-
 const listaPersonagens = new listPerso();
 console.log(listaPersonagens)
 function page() {
   const [listPerso, setListaPerso] = useState([]);
   const [dadosApi, SetDadosApi] = useState(null);
-  const [escuro, setEscuro] = useState(false);
-
+  const [pageNumber, setPageNumber] = useState(0);
+  const next = (pages)=>{
+    setPageNumber(pageNumber+pages)
+    characpage(pageNumber);
+  }
 
   console.log("Troquei")
 
@@ -27,28 +29,31 @@ function page() {
     listaPersonagens.deletePers(person);
     setListaPerso(listaPersonagens.getListaPerso());
   }
- 
+
   useEffect(() => {
     let ignore = false;
+
     const rickmortyFetch = async () => {
       try {
         const dados = await personagens()
         if (!ignore) {
-          SetDadosApi(dados);
-          listaPersonagens.addApiData(dados);
-          SetDadosApi(listaPersonagens.getListaPerso());
+        SetDadosApi(dados);
+        listaPersonagens.addApiData(dados);
+        SetDadosApi(listaPersonagens.getListaPerso());
         }
       } catch (e) {
         throw e;
       }
     };
     rickmortyFetch();
-
+    
     return () => {
       ignore = true;
     };
 
-  }, []);
+  }, [pageNumber]);
+
+  
 
   const [name, setNome] = useState("");
   const [status, setEstado] = useState("");
@@ -72,62 +77,38 @@ function page() {
       setGenero("");
       setImage("");
       handleShowPopup("Cadastro concluído", "success")
-    } catch (error) {
-      handleShowPopup("Erro aleatório", "error");
+      } catch (error) {
+        handleShowPopup("Erro aleatório", "error");
+      }
+
+      console.log(handleSubmit)
+    };
+
+    const deletePers = (person) => {
+      listaPersonagens.deletePers(person);
+      setListaPerso(listaPersonagens.getListaPerso());
+    }
+    
+
+    const handleShowPopup = (message, type) => {
+      setPopupMessage(message)
+      setPopupType(type)
+      setShowPopup(true)
+      setTimeout(() => {
+        setShowPopup(false)
+      }, 3000)
     }
 
-    console.log(handleSubmit)
-  };
-
-  const deletePers = (person) => {
-    listaPersonagens.deletePers(person);
-    setListaPerso(listaPersonagens.getListaPerso());
-  }
-
-
-
-  const handleShowPopup = (message, type) => {
-    setPopupMessage(message)
-    setPopupType(type)
-    setShowPopup(true)
-    setTimeout(() => {
-      setShowPopup(false)
-    }, 3000)
-  }
-
-  const tema = {
-    backgroundColor: escuro ? "#1e2a39" : "#d9f7c8bc", 
-    color: escuro ? "#43ff2a" : "#1e2a39",
-  }
-
-  const tema2 = {
-    backgroundColor: escuro ? "#d9f7c8bc" : "#1e2a39", 
-    color: escuro ? "#1e2a39" : "#43ff2a",
-  }
-
-  return (
-    <div className={style.body}>
-      <div className={style.imgLogo}>
-        <img src="/Rick-and-Morty.png" width={900} height={500} />
-      </div>
-  
-      <div className={style.body} style={tema}>
+    return (
+      <div className={style.body}>
         <div className={style.imgLogo}>
           <img src="/Rick-and-Morty.png" width={900} height={500} />
         </div>
-
         <div className={style.imgLogoMobile}>
           <img src="/Rick-and-Morty.png" width={400} height={200} />
         </div>
-
-
       <div className={style.container}>
-
-        <button onClick={() => { setEscuro(old => ! old) }} className={style.button}>Tema</button>
-        <div className={style.app} style={tema2}>
-
         <div className={style.app}>
-
           <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
           <input value={name} className={style.input} onChange={(e) => setNome(e.target.value)} type="text" placeholder='Digite o nome' />
           <input value={status} className={style.input} onChange={(e) => setEstado(e.target.value)} type="text" placeholder='Digite o estado (vivo, morto ...)' />
@@ -141,13 +122,13 @@ function page() {
               type={popupType}
             />
           )}</p>
-
           </div>
-
+          <div>
+            <button onClick={next}>mudar página</button>
+          </div>
           <div className={style.lista}>
-
             {listaPersonagens.listaPerso.map((person) => (
-              <div className={style.card} style={tema2}>
+              <div className={style.card}>
                 <div className={style.content} >
                   <h2 className={style.p}>{person.name}</h2>
                   <img src={person.image} alt={person.name} width={150} height={150}/>
@@ -157,15 +138,15 @@ function page() {
                   <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
                   <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
                 </div>
+                
               </div>
-
-          ))}
+            ))}
+          </div>
         </div>
-</div>
-</div>
               <Footer />
     </div>
-    </div>
-)};
-  export default page;
 
+    )
+
+      };
+  export default page;
