@@ -16,6 +16,8 @@ function page() {
   const [escuro, setEscuro] = useState(false);
 
 
+  console.log("Troquei")
+
   const editPers = (person) => {
     setNome(person.name);
     setEstado(person.status);
