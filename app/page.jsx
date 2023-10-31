@@ -15,6 +15,7 @@ function page() {
   const [dadosApi, SetDadosApi] = useState(null);
   const [escuro, setEscuro] = useState(false);
 
+
   const editPers = (person) => {
     setNome(person.name);
     setEstado(person.status);
@@ -24,24 +25,23 @@ function page() {
     listaPersonagens.deletePers(person);
     setListaPerso(listaPersonagens.getListaPerso());
   }
-
+ 
   useEffect(() => {
     let ignore = false;
-
     const rickmortyFetch = async () => {
       try {
         const dados = await personagens()
         if (!ignore) {
-        SetDadosApi(dados);
-        listaPersonagens.addApiData(dados);
-        SetDadosApi(listaPersonagens.getListaPerso());
+          SetDadosApi(dados);
+          listaPersonagens.addApiData(dados);
+          SetDadosApi(listaPersonagens.getListaPerso());
         }
       } catch (e) {
         throw e;
       }
     };
     rickmortyFetch();
-    
+
     return () => {
       ignore = true;
     };
@@ -70,28 +70,34 @@ function page() {
       setGenero("");
       setImage("");
       handleShowPopup("Cadastro concluído", "success")
-      } catch (error) {
-        handleShowPopup("Erro aleatório", "error");
-      }
-
-      console.log(handleSubmit)
-    };
-
-    const deletePers = (person) => {
-      listaPersonagens.deletePers(person);
-      setListaPerso(listaPersonagens.getListaPerso());
-    }
-    
-
-    const handleShowPopup = (message, type) => {
-      setPopupMessage(message)
-      setPopupType(type)
-      setShowPopup(true)
-      setTimeout(() => {
-        setShowPopup(false)
-      }, 3000)
+    } catch (error) {
+      handleShowPopup("Erro aleatório", "error");
     }
 
+    console.log(handleSubmit)
+  };
+
+  const deletePers = (person) => {
+    listaPersonagens.deletePers(person);
+    setListaPerso(listaPersonagens.getListaPerso());
+  }
+
+
+
+  const handleShowPopup = (message, type) => {
+    setPopupMessage(message)
+    setPopupType(type)
+    setShowPopup(true)
+    setTimeout(() => {
+      setShowPopup(false)
+    }, 3000)
+  }
+
+  return (
+    <div className={style.body}>
+      <div className={style.imgLogo}>
+        <img src="/Rick-and-Morty.png" width={900} height={500} />
+      </div>
     const tema = {
       backgroundColor: escuro ? "#1e2a39" : "#d9f7c8bc", 
       color: escuro ? "#43ff2a" : "#1e2a39",
@@ -113,6 +119,7 @@ function page() {
           <img src="/Rick-and-Morty.png" width={400} height={200} />
         </div>
 
+
       <div className={style.container}>
 
         <button onClick={() => { setEscuro(old => ! old) }} className={style.button}>Tema</button>
@@ -133,6 +140,7 @@ function page() {
               type={popupType}
             />
           )}</p>
+
           </div>
 
           <div className={style.lista}>
@@ -148,13 +156,15 @@ function page() {
                   <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
                   <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
                 </div>
-                
               </div>
-            ))}
-          </div>
+
+            </div>
+          ))}
         </div>
+
               <Footer />
     </div>
     </div>
 )}
   export default page;
+
