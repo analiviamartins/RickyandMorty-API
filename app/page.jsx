@@ -93,23 +93,22 @@ function page() {
     }, 3000)
   }
 
+  const tema = {
+    backgroundColor: escuro ? "#1e2a39" : "#d9f7c8bc", 
+    color: escuro ? "#43ff2a" : "#1e2a39",
+  }
+
+  const tema2 = {
+    backgroundColor: escuro ? "#d9f7c8bc" : "#1e2a39", 
+    color: escuro ? "#1e2a39" : "#43ff2a",
+  }
+
   return (
     <div className={style.body}>
       <div className={style.imgLogo}>
         <img src="/Rick-and-Morty.png" width={900} height={500} />
       </div>
-    const tema = {
-      backgroundColor: escuro ? "#1e2a39" : "#d9f7c8bc", 
-      color: escuro ? "#43ff2a" : "#1e2a39",
-    }
-
-    const tema2 = {
-      backgroundColor: escuro ? "#d9f7c8bc" : "#1e2a39", 
-      color: escuro ? "#1e2a39" : "#43ff2a",
-    }
-
-    return (
-        
+  
       <div className={style.body} style={tema}>
         <div className={style.imgLogo}>
           <img src="/Rick-and-Morty.png" width={900} height={500} />
@@ -158,13 +157,13 @@ function page() {
                 </div>
               </div>
 
-            </div>
           ))}
         </div>
-
+</div>
+</div>
               <Footer />
     </div>
     </div>
-)}
+)};
   export default page;
 
