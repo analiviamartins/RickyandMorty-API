@@ -4,7 +4,8 @@ import personagens from "@/data/charactersApi";
 import listPerso from '../models/listPerso'
 import style from '../app/page.module.css'
 import PopUp from '../app/components/PopUp/popUp';
-
+import Footer from '../app/components/Footer/footer';
+import Link from "next/link";
 
 
 const listaPersonagens = new listPerso();
@@ -45,7 +46,7 @@ function page() {
       ignore = true;
     };
 
-  }, []);
+  }, [pageNumber]);
 
   
 
@@ -112,8 +113,12 @@ function page() {
         </div>
         <label htmlFor="btn" className={style.label}></label>
       <div className={style.container}>
+
         <button onClick={() => { setEscuro(old => ! old) }} className={style.button}>Tema</button>
         <div className={style.app} style={tema2}>
+
+        <div className={style.app}>
+
           <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
           <input value={name} className={style.input} onChange={(e) => setNome(e.target.value)} type="text" placeholder='Digite o nome' />
           <input value={status} className={style.input} onChange={(e) => setEstado(e.target.value)} type="text" placeholder='Digite o estado (vivo, morto ...)' />
@@ -128,7 +133,9 @@ function page() {
             />
           )}</p>
           </div>
-          <div className={style.lista} >
+
+          <div className={style.lista}>
+
             {listaPersonagens.listaPerso.map((person) => (
               <div className={style.card} style={tema2}>
                 <div className={style.content} >
@@ -145,8 +152,10 @@ function page() {
             ))}
           </div>
         </div>
-      
+              <Footer />
     </div>
+
     )
-  };
+
+      };
   export default page;
