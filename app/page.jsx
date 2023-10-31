@@ -18,6 +18,8 @@ function page() {
     characpage(pageNumber);
   }
 
+  console.log("Troquei")
+
   const editPers = (person) => {
     setNome(person.name);
     setEstado(person.status);
