@@ -3,3 +3,7 @@
     padding: 0;
     text-decoration: none;
 }
+@font-face{
+    font-family: "font_rick";
+    src: url("/fonts/get.ttf");
+}
