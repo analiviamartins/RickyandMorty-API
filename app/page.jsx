@@ -105,7 +105,6 @@ function page() {
     }
 
     return (
-      
         
       <div className={style.body} style={tema}>
         <div className={style.imgLogo}>
@@ -154,8 +153,6 @@ function page() {
         </div>
               <Footer />
     </div>
-
-    )
-
-      };
+    </div>
+)}
   export default page;
