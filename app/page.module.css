@@ -1,29 +1,40 @@
 .body {
     background-color: #d9f7c8bc;
     font-family: 'Roboto', sans-serif;
-    font-size: 14.4px;
+    font-size: 0.9rem;
     font-weight: 360;
     line-height: 1.5;
     text-align: left;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .container {
     width: 90%;
     box-sizing: border-box;
-    margin-left: -10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .app {
-    max-width: 500px;
-    margin-top: 25px;
-    margin-left: 290px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background-color: #1e2a39;
-    padding: 18px 27px;
-    border-radius: 9px;
+    border-radius: 0.563rem;
     color: #97ce4c;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 40rem;
+    height: 20rem;
 }
 
 .title {
@@ -33,10 +44,10 @@
 
 .edit {
     background-color: #43ff2a;
-    padding: 4.5px 9px;
-    margin-right: 9px;
+    padding: 0.281rem 0.563rem;
+    margin-right: 0.563rem;
     border: none;
-    border-radius: 2.7px;
+    border-radius: 0.169rem;
     cursor: pointer;
     opacity: 0.8;
     transition: 0.3s;
@@ -48,10 +59,10 @@
 
 .remove {
     background-color: #3ed5ff;
-    padding: 4.5px 9px;
-    margin-right: 9px;
+    padding: 0.281rem 0.563rem;
+    margin-right: 0.563rem;
     border: none;
-    border-radius: 2.7px;
+    border-radius: 0.169rem;
     cursor: pointer;
     opacity: 0.8;
     transition: 0.3s;
@@ -62,19 +73,18 @@
 }
 
 .lista {
-    margin-top: 18px;
-    padding-top: 18px;
+    margin-top: 1.125rem;
+    padding-top: 1.125rem;
 }
 
 .card {
     background-color: #1e2a39;
-    border-radius: 10.8px;
-    box-shadow: 0 5px 4px rgb(131, 130, 130);
-    margin: 9px;
-    padding: 18px;
+    border-radius: 0.675rem;
+    box-shadow: 0 0.313rem 0.25rem rgb(131, 130, 130);
+    margin: 1.5rem;
     text-align: center;
-    width: 290px;
-    height: 270px;
+    width: 18.125rem;
+    height: 20rem;
     display: inline-block;
     flex-direction: column;
     align-items: center;
@@ -91,10 +101,10 @@
 .button {
     background-color: #111;
     color: #00ff00;
-    padding: 8px 16px;
-    font-size: 20px;
-    border: 10px;
-    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    border: 0.625rem;
+    border-radius: 0.625rem;
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
@@ -102,7 +112,7 @@
 
 .button:hover {
     background-color: #00ff00;
-    box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+    box-shadow: 0 0 0.625rem #00ff00, 0 0 1.25rem #00ff00, 0 0 1.875rem #00ff00;
     color: #111;
 }
 
@@ -111,28 +121,63 @@
 }
 
 .input {
-    padding: 4.7px;
-    margin-bottom: 9px;
-    border: 0.9px solid #ddd;
-    border-radius: 2.7px;
+    padding: 0.294rem;
+    margin-bottom: 0.563rem;
+    border: 0.056rem solid #ddd;
+    border-radius: 0.169rem;
     width: 90%;
     background-color: #eeffe5bc;
 }
 
 .imgLogo{
     width: 90%;
-    max-width: 373.5px;
     height: auto;
     display: block;
-    margin-left: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.imgLogoMobile{
+    display: none;
 }
 
 .container{
     text-align: center;
-    margin-left: 70px;
     }
 
 .text{
     font-size: large;
 }
 
+
+@media only screen and (max-width: 1024px) {
+
+    .body{
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+
+    }
+    .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .imgLogo{
+        display: none;
+    }
+    .imgLogoMobile{
+        display: block;
+    }
+
+    .app{
+        width: 100%;
+        max-width: 21.875rem;
+
+        }
+}

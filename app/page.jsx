@@ -108,7 +108,11 @@ function page() {
         <div className={style.imgLogo}>
           <img src="/Rick-and-Morty.png" width={900} height={500} />
         </div>
-        <label htmlFor="btn" className={style.label}></label>
+
+        <div className={style.imgLogoMobile}>
+          <img src="/Rick-and-Morty.png" width={400} height={200} />
+        </div>
+
       <div className={style.container}>
 
         <button onClick={() => { setEscuro(old => ! old) }} className={style.button}>Tema</button>
