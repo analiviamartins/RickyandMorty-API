@@ -4,7 +4,8 @@ import personagens, {characpage} from "@/data/charactersApi";
 import listPerso from '../models/listPerso'
 import style from '../app/page.module.css'
 import PopUp from '../app/components/PopUp/popUp';
-
+import Footer from '../app/components/Footer/footer';
+import Link from "next/link";
 
 const listaPersonagens = new listPerso();
 console.log(listaPersonagens)
@@ -137,8 +138,10 @@ function page() {
             ))}
           </div>
         </div>
-      
+              <Footer />
     </div>
+
     )
-  };
+
+      };
   export default page;
