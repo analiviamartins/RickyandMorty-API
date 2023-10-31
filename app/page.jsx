@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from "react"
-import personagens, {characpage} from "@/data/charactersApi";
+import personagens from "@/data/charactersApi";
 import listPerso from '../models/listPerso'
 import style from '../app/page.module.css'
 import PopUp from '../app/components/PopUp/popUp';
@@ -11,11 +11,6 @@ console.log(listaPersonagens)
 function page() {
   const [listPerso, setListaPerso] = useState([]);
   const [dadosApi, SetDadosApi] = useState(null);
-  const [pageNumber, setPageNumber] = useState(0);
-  const next = (pages)=>{
-    setPageNumber(pageNumber+pages)
-    characpage(pageNumber);
-  }
 
   const editPers = (person) => {
     setNome(person.name);
@@ -26,31 +21,29 @@ function page() {
     listaPersonagens.deletePers(person);
     setListaPerso(listaPersonagens.getListaPerso());
   }
-
+ 
   useEffect(() => {
     let ignore = false;
-
     const rickmortyFetch = async () => {
       try {
         const dados = await personagens()
         if (!ignore) {
-        SetDadosApi(dados);
-        listaPersonagens.addApiData(dados);
-        SetDadosApi(listaPersonagens.getListaPerso());
+          SetDadosApi(dados);
+          listaPersonagens.addApiData(dados);
+          SetDadosApi(listaPersonagens.getListaPerso());
         }
       } catch (e) {
         throw e;
       }
     };
     rickmortyFetch();
-    
+
     return () => {
       ignore = true;
     };
 
-  }, [pageNumber]);
+  }, []);
 
-  
 
   const [name, setNome] = useState("");
   const [status, setEstado] = useState("");
@@ -74,33 +67,33 @@ function page() {
       setGenero("");
       setImage("");
       handleShowPopup("Cadastro concluído", "success")
-      } catch (error) {
-        handleShowPopup("Erro aleatório", "error");
-      }
-
-      console.log(handleSubmit)
-    };
-
-    const deletePers = (person) => {
-      listaPersonagens.deletePers(person);
-      setListaPerso(listaPersonagens.getListaPerso());
-    }
-    
-
-    const handleShowPopup = (message, type) => {
-      setPopupMessage(message)
-      setPopupType(type)
-      setShowPopup(true)
-      setTimeout(() => {
-        setShowPopup(false)
-      }, 3000)
+    } catch (error) {
+      handleShowPopup("Erro aleatório", "error");
     }
 
-    return (
-      <div className={style.body}>
-        <div className={style.imgLogo}>
-          <img src="/Rick-and-Morty.png" width={900} height={500} />
-        </div>
+    console.log(handleSubmit)
+  };
+
+  const deletePers = (person) => {
+    listaPersonagens.deletePers(person);
+    setListaPerso(listaPersonagens.getListaPerso());
+  }
+
+
+  const handleShowPopup = (message, type) => {
+    setPopupMessage(message)
+    setPopupType(type)
+    setShowPopup(true)
+    setTimeout(() => {
+      setShowPopup(false)
+    }, 3000)
+  }
+
+  return (
+    <div className={style.body}>
+      <div className={style.imgLogo}>
+        <img src="/Rick-and-Morty.png" width={900} height={500} />
+      </div>
       <div className={style.container}>
         <div className={style.app}>
           <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
@@ -116,29 +109,26 @@ function page() {
               type={popupType}
             />
           )}</p>
-          </div>
-          <div>
-            <button onClick={next}>mudar página</button>
-          </div>
-          <div className={style.lista}>
-            {listaPersonagens.listaPerso.map((person) => (
-              <div className={style.card}>
-                <div className={style.content} >
-                  <h2 className={style.p}>{person.name}</h2>
-                  <img src={person.image} alt={person.name} width={150} height={150}/>
-                  <p className={style.p}><strong>Estado: </strong>{person.status}</p>
-                  <p className={style.p}><strong>Especie: </strong>{person.species}</p>
-                  <p className={style.p}><strong>Gênero: {person.gender} </strong></p>
-                  <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
-                  <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
-                </div>
-                
-              </div>
-            ))}
-          </div>
         </div>
-      
+        <div className={style.lista}>
+          {listaPersonagens.listaPerso.map((person) => (
+            <div className={style.card}>
+              <div className={style.content} >
+                <h2 className={style.p}>{person.name}</h2>
+                <img src={person.image} alt={person.name} width={150} height={150} />
+                <p className={style.p}><strong>Estado: </strong>{person.status}</p>
+                <p className={style.p}><strong>Especie: </strong>{person.species}</p>
+                <p className={style.p}><strong>Gênero: {person.gender} </strong></p>
+                <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
+                <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
+              </div>
+
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
-    )
-  };
-  export default page;
+  )
+};
+export default page;
