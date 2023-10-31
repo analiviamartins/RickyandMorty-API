@@ -102,6 +102,9 @@ function page() {
         <div className={style.imgLogo}>
           <img src="/Rick-and-Morty.png" width={900} height={500} />
         </div>
+        <div className={style.imgLogoMobile}>
+          <img src="/Rick-and-Morty.png" width={400} height={200} />
+        </div>
       <div className={style.container}>
         <div className={style.app}>
           <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
