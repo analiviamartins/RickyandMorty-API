@@ -46,9 +46,7 @@ function page() {
       ignore = true;
     };
 
-  }, [pageNumber]);
-
-  
+  }, []);
 
   const [name, setNome] = useState("");
   const [status, setEstado] = useState("");
