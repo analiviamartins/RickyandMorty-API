@@ -12,23 +12,7 @@ console.log(listaPersonagens)
 function page() {
   const [listPerso, setListaPerso] = useState([]);
   const [dadosApi, SetDadosApi] = useState(null);
-  const [pageNumber, setPageNumber] = useState(0);
-  const next = (pages)=>{
-    setPageNumber(pageNumber+pages)
-    characpage(pageNumber);
-  }
-
-  console.log("Troquei")
-
-  const editPers = (person) => {
-    setNome(person.name);
-    setEstado(person.status);
-    setEspecie(person.species);
-    setGenero(person.gender);
-    setImage(person.image);
-    listaPersonagens.deletePers(person);
-    setListaPerso(listaPersonagens.getListaPerso());
-  }
+  const [escuro, setEscuro] = useState(false);
 
   useEffect(() => {
     let ignore = false;
@@ -51,7 +35,7 @@ function page() {
       ignore = true;
     };
 
-  }, [pageNumber]);
+  }, []);
 
   
 
@@ -99,8 +83,18 @@ function page() {
       }, 3000)
     }
 
+    const tema = {
+      backgroundColor: escuro ? "#1e2a39" : "#d9f7c8bc",
+      color: escuro ? "#43ff2a" : "#1e2a39",
+    }
+
+    const tema2 = {
+      backgroundColor: escuro ? "#d9f7c8bc" : "#1e2a39",
+      color: escuro ? "#1e2a39" : "#43ff2a",
+    }
+
     return (
-      <div className={style.body}>
+      <div className={style.body} style={tema}>
         <div className={style.imgLogo}>
           <img src="/Rick-and-Morty.png" width={900} height={500} />
         </div>
@@ -108,7 +102,9 @@ function page() {
           <img src="/Rick-and-Morty.png" width={400} height={200} />
         </div>
       <div className={style.container}>
-        <div className={style.app}>
+
+        <button className={`${style.button} ${style.buttons}`} onClick={() => {setEscuro(old => !old)}}>Tema</button>
+        <div className={style.app} style={tema2}>
           <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
           <input value={name} className={style.input} onChange={(e) => setNome(e.target.value)} type="text" placeholder='Digite o nome' />
           <input value={status} className={style.input} onChange={(e) => setEstado(e.target.value)} type="text" placeholder='Digite o estado (vivo, morto ...)' />
@@ -123,12 +119,9 @@ function page() {
             />
           )}</p>
           </div>
-          <div>
-            <button onClick={next}>mudar página</button>
-          </div>
           <div className={style.lista}>
             {listaPersonagens.listaPerso.map((person) => (
-              <div className={style.card}>
+              <div className={style.card} style={tema2}>
                 <div className={style.content} >
                   <h2 className={style.p}>{person.name}</h2>
                   <img src={person.image} alt={person.name} width={150} height={150}/>
