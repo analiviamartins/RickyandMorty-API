@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from "react"
-import personagens, { characpage } from "@/data/charactersApi";
+import personagens from "@/data/charactersApi";
 import listPerso from '../models/listPerso'
 import style from '../app/page.module.css'
 import PopUp from '../app/components/PopUp/popUp';
@@ -15,6 +15,42 @@ function page() {
   const [listPerso, setListaPerso] = useState([]);
   const [dadosApi, SetDadosApi] = useState(null);
   const [escuro, setEscuro] = useState(false);
+  const [flag, setFlag] = useState(0);
+  const [editButton, setEditButton] = useState(false);
+
+  const edit = (person) => {
+    setNome(person.name);
+    setEstado(person.status);
+    setEspecie(person.species);
+    setGenero(person.gender);
+    setImage(person.image);
+
+    setEditButton(true);
+    setFlag(person);
+  };
+
+  const update = () => {
+    listaPersonagens.atualizarEdicao(flag, name, status, species, gender, image );
+
+    atualizarEdit();
+    setEditButton(false);
+    setFlag(0);
+  };
+
+  const atualizarEdit = () => {
+    setNome("");
+    setEstado("");
+    setEspecie("");
+    setGenero("");
+    setImage("");
+
+    setNome(listaPersonagens.name);
+    setEstado(listaPersonagens.status);
+    setEspecie(listaPersonagens.species);
+    setGenero(listaPersonagens.gender);
+    setImage(listaPersonagens.image)
+  };
+
 
   useEffect(() => {
     let ignore = false;
@@ -116,6 +152,7 @@ function page() {
             <input value={gender} className={style.input} onChange={(e) => setGenero(e.target.value)} type="text" placeholder='Digite o gênero' />
             <input value={image} className={style.input} onChange={(e) => setImage(e.target.value)} type="text" placeholder='Link da imagem' />
             <button className={style.button} type='button' onClick={handleSubmit}>Cadastrar</button>
+            <button className={style.button} type='button' value={editButton} onClick={() => update()}>Salvar</button>
             <p>{showPopup && (
               <PopUp
                 message={popupMessage}
@@ -135,7 +172,7 @@ function page() {
                       <p className={style.p}><strong>Especie: </strong>{person.species}</p>
                       <p className={style.p}><strong>Gênero: {person.gender} </strong></p>
                       <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
-                      <button className={style.edit} onClick={() => editPers(person)}>Editar</button>
+                      <button className={style.edit} onClick={() => edit(person)}>Editar</button>
                     </div>
 
                   </div>
