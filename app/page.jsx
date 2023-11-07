@@ -172,7 +172,6 @@ function page() {
                       <p className={style.p}><strong>Especie: </strong>{person.species}</p>
                       <p className={style.p}><strong>Gênero: {person.gender} </strong></p>
                       <button className={style.remove} onClick={() => deletePers(person)}>Excluir</button>
-                      <button className={style.edit} onClick={() => edit(person)}>Editar</button>
                     </div>
 
                   </div>
