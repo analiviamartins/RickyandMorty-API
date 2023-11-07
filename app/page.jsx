@@ -5,18 +5,30 @@ import listPerso from "../models/listPerso";
 import style from "./page.module.css";
 import PopUp from "./components/PopUp/popUp";
 import Footer from "./components/footer/Footer";
-import Link from "next/link";
 import Loading from "./components/loading/Loading";
 import Header from "./components/header/Header";
 
 const listaPersonagens = new listPerso();
 console.log(listaPersonagens);
 function page() {
+  const [page, setPage] = useState(1);
   const [listPerso, setListaPerso] = useState([]);
   const [dadosApi, setDadosApi] = useState(null);
   const [escuro, setEscuro] = useState(false);
   const [flag, setFlag] = useState(0);
   const [editButton, setEditButton] = useState(false);
+
+  const previous = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const next = () => {
+    if (page < 34) {
+      setPage(page + 1);
+    }
+  };
 
   const edit = (person) => {
     setNome(person.name);
@@ -63,7 +75,7 @@ function page() {
 
     const rickmortyFetch = async () => {
       try {
-        const dados = await personagens();
+        const dados = await personagens(page);
         if (!ignore) {
           setDadosApi(dados);
           listaPersonagens.addApiData(dados);
@@ -78,7 +90,7 @@ function page() {
     return () => {
       ignore = true;
     };
-  }, []);
+  }, [page]);
 
   const [name, setNome] = useState("");
   const [status, setEstado] = useState("");
@@ -153,10 +165,25 @@ function page() {
             Tema
           </button>
 
+          <div className={style.paginacao}>
+            <button
+              className={`${style.button} ${style.buttons}`}
+              onClick={previous}
+            >
+              Anterior
+            </button>
+            <button
+              className={`${style.button} ${style.buttons}`}
+              onClick={next}
+            >
+              Próximo
+            </button>
+          </div>
+
           <div className={style.lista}>
             {dadosApi ? (
               listaPersonagens.listaPerso.map((person) => (
-                <div className={style.card} style={tema2}>
+                <div key={person.id} className={style.card} style={tema2}>
                   <div className={style.content}>
                     <h2 className={style.p}>{person.name}</h2>
                     <img
