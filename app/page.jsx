@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import { useEffect, useState } from "react";
 import personagens from "@/data/charactersApi";
 import listPerso from "../models/listPerso";
 import style from "./page.module.css";
@@ -11,13 +12,35 @@ import Header from "./components/header/Header";
 const listaPersonagens = new listPerso();
 
 function page() {
+  // Inputs
+  const [name, setNome] = useState("");
+  const [status, setEstado] = useState("");
+  const [species, setEspecie] = useState("");
+  const [gender, setGenero] = useState("");
+  const [image, setImage] = useState("");
+
+  // PopUp
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("");
+
+  // Api
   const [page, setPage] = useState(1);
   const [listPerso, setListaPerso] = useState([]);
   const [dadosApi, setDadosApi] = useState(null);
-  const [escuro, setEscuro] = useState(false);
+  const [cadastrados, setCadastrados] = useState(
+    listaPersonagens.getContador()
+  );
+
+  // Edit
   const [flag, setFlag] = useState(0);
   const [editButton, setEditButton] = useState(false);
 
+  // Tema
+  const [escuro, setEscuro] = useState(false);
+
+  // Paginação
+  const itemsPerPage = 20;
   const previous = () => {
     if (page > 1) {
       setPage(page - 1);
@@ -25,50 +48,13 @@ function page() {
   };
 
   const next = () => {
-    if (page < 34) {
+    const totalPages = Math.ceil((42 * 20) / itemsPerPage);
+    if (page < totalPages) {
       setPage(page + 1);
     }
   };
 
-  const edit = (person) => {
-    setNome(person.name);
-    setEstado(person.status);
-    setEspecie(person.species);
-    setGenero(person.gender);
-    setImage(person.image);
-
-    setEditButton(true);
-    setFlag(person);
-  };
-
-  const update = () => {
-    listaPersonagens.atualizarEdicao(
-      flag,
-      name,
-      status,
-      species,
-      gender,
-      image
-    );
-
-    atualizarEdit();
-    setEditButton(false);
-    setFlag(0);
-  };
-
-  const atualizarEdit = () => {
-    setNome("");
-    setEstado("");
-    setEspecie("");
-    setGenero("");
-    setImage("");
-
-    setNome(listaPersonagens.name);
-    setEstado(listaPersonagens.status);
-    setEspecie(listaPersonagens.species);
-    setGenero(listaPersonagens.gender);
-    setImage(listaPersonagens.image);
-  };
+  // 40 * 20 = 800
 
   useEffect(() => {
     let ignore = false;
@@ -92,36 +78,57 @@ function page() {
     };
   }, [page]);
 
-  const [name, setNome] = useState("");
-  const [status, setEstado] = useState("");
-  const [species, setEspecie] = useState("");
-  const [gender, setGenero] = useState("");
-  const [image, setImage] = useState("");
-
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState("");
-  const [popupType, setPopupType] = useState("");
-
   const handleSubmit = () => {
     try {
       if (!name || !status || !species || !gender || !image) {
         return handleShowPopup("Parâmetros incompletos", "error");
       }
+
       listaPersonagens.add(name, status, species, gender, image);
-      setNome("");
-      setEstado("");
-      setEspecie("");
-      setGenero("");
-      setImage("");
+      setListaPerso(listaPersonagens.getListaPerso());
+      setCadastrados(listaPersonagens.getContador());
+      atualizarEdit();
       handleShowPopup("Cadastro concluído", "success");
     } catch (error) {
       handleShowPopup("Erro aleatório", "error");
     }
   };
 
+  const editPerso = (id) => {
+    const person = listaPersonagens.getPersoPorId(id);
+    setNome(person.name);
+    setEstado(person.status);
+    setEspecie(person.species);
+    setGenero(person.gender);
+    setImage(person.image);
+
+    setEditButton(true);
+    setFlag(id);
+  };
+
+  const update = () => {
+    listaPersonagens.atualizarPerso(flag, name, status, species, gender, image);
+
+    atualizarEdit();
+    setEditButton(false);
+    setFlag(0);
+  };
+
   const deletePers = (person) => {
     listaPersonagens.deletePers(person);
     setListaPerso(listaPersonagens.getListaPerso());
+    setCadastrados(listaPersonagens.getContador());
+  };
+
+  const atualizarEdit = () => {
+    setNome("");
+    setEstado("");
+    setEspecie("");
+    setGenero("");
+    setImage("");
+
+    setListaPerso(listaPersonagens.getListaPerso());
+    setEditButton(false);
   };
 
   const handleShowPopup = (message, type) => {
@@ -132,6 +139,10 @@ function page() {
       setShowPopup(false);
     }, 3000);
   };
+
+  const intervalo = setTimeout(() => {
+    <Loading />;
+  }, 1000);
 
   const tema = {
     backgroundColor: escuro ? "#1e2a39" : "#d9f7c8bc",
@@ -148,10 +159,10 @@ function page() {
       <Header />
       <div className={style.body} style={tema}>
         <div className={style.imgLogo}>
-          <img src="/Rick-and-Morty.png" width={900} height={500} />
+          <img src="/Rick-and-Morty.png" width={900} height={300} />
         </div>
         <div className={style.imgLogoMobile}>
-          <img src="/Rick-and-Morty.png" width={400} height={200} />
+          <img src="/Rick-and-Morty.png" width={400} height={100} />
         </div>
         <div className={style.container}>
           <button
@@ -178,11 +189,102 @@ function page() {
             </button>
           </div>
 
+          {/* Exibir número da página atual */}
+          <div className={style.atual}>
+            <p className={style.p}>Página atual: {page}</p>
+          </div>
+
           <div className={style.lista}>
             {dadosApi ? (
               // Exibir 20 persobagens por página
+              listPerso
+                .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                .map((person) =>
+                  person.api ? (
+                    <div key={person.id} className={style.card} style={tema2}>
+                      <div className={style.content}>
+                        <h2 className={style.p}>{person.name}</h2>
+                        <img
+                          src={person.image}
+                          alt={person.name}
+                          width={150}
+                          height={150}
+                        />
+                        <p className={style.p}>
+                          <strong>Estado: </strong>
+                          {person.status === "Alive"
+                            ? "Vivo"
+                            : person.status === "Dead"
+                            ? "Morto"
+                            : "Desconhecido"}
+                        </p>
+                        <p className={style.p}>
+                          <strong>Especie: </strong>
+                          {person.species === "Human"
+                            ? "Humano"
+                            : person.species === "Alien"
+                            ? "Alienígena"
+                            : person.species === "Humanoid"
+                            ? "Humanóide"
+                            : person.species === "Mythological Creature"
+                            ? "Criatura Mitológica"
+                            : person.species === "Poopybutthole"
+                            ? "Poopybutthole"
+                            : person.species === "Animal"
+                            ? "Animal"
+                            : person.species === "Robot"
+                            ? "Robô"
+                            : person.species === "Disease"
+                            ? "Doença"
+                            : person.species === "Vampire"
+                            ? "Vampiro"
+                            : person.species === "Cronenberg"
+                            ? "Cronenberg"
+                            : person.species === "unknown"
+                            ? "Desconhecido"
+                            : person.species}
+                        </p>
+                        <p className={style.p}>
+                          <strong>
+                            Gênero:{" "}
+                            {person.gender === "Female"
+                              ? "Feminino"
+                              : person.gender === "Male"
+                              ? "Masculino"
+                              : "Desconhecido"}
+                          </strong>
+                        </p>
+                        <div>
+                          <button
+                            className={style.remove}
+                            onClick={() => deletePers(person)}
+                          >
+                            Excluir
+                          </button>
+                          <button
+                            className={style.edit}
+                            onClick={() => editPerso(person.id)}
+                          >
+                            Editar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null
+                )
+            ) : (
+              <Loading />
+            )}
+          </div>
+
+          <div className={style.lista}>
+            {cadastrados > 0 ? (
+              <h1 className={style.h1}>Personagens Cadastrados</h1>
+            ) : null}
+            {dadosApi ? (
+              // Exibir 20 personagens por página
               listPerso.map((person) =>
-                person.id <= page * 20 && person.id > page * 20 - 20 ? (
+                !person.api ? (
                   <div key={person.id} className={style.card} style={tema2}>
                     <div className={style.content}>
                       <h2 className={style.p}>{person.name}</h2>
@@ -198,7 +300,9 @@ function page() {
                           ? "Vivo"
                           : person.status === "Dead"
                           ? "Morto"
-                          : "Desconhecido"}
+                          : person.status === "unknown"
+                          ? "Desconhecido"
+                          : person.status}
                       </p>
                       <p className={style.p}>
                         <strong>Especie: </strong>
@@ -236,17 +340,23 @@ function page() {
                             : "Desconhecido"}
                         </strong>
                       </p>
-                      <button
-                        className={style.remove}
-                        onClick={() => deletePers(person)}
-                      >
-                        Excluir
-                      </button>
+                      <div>
+                        <button
+                          className={style.remove}
+                          onClick={() => deletePers(person)}
+                        >
+                          Excluir
+                        </button>
+                        <button
+                          className={style.edit}
+                          onClick={() => editPerso(person.id)}
+                        >
+                          Editar
+                        </button>
+                      </div>
                     </div>
                   </div>
-                ) : (
-                  ""
-                )
+                ) : null
               )
             ) : (
               <Loading />
@@ -254,7 +364,11 @@ function page() {
           </div>
 
           <div className={style.app} style={tema2}>
-            <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
+            {editButton ? (
+              <h1 className={style.h1}>Editar Personagem</h1>
+            ) : (
+              <h1 className={style.h1}>Cadastrar Personagem</h1>
+            )}
             <input
               value={name}
               className={style.input}
@@ -290,21 +404,15 @@ function page() {
               type="text"
               placeholder="Link da imagem"
             />
-            <button
-              className={style.button}
-              type="button"
-              onClick={handleSubmit}
-            >
-              Cadastrar
-            </button>
-            <button
-              className={style.button}
-              type="button"
-              value={editButton}
-              onClick={() => update()}
-            >
-              Salvar
-            </button>
+            {editButton ? (
+              <button className={style.button} onClick={update}>
+                Atualizar
+              </button>
+            ) : (
+              <button className={style.button} onClick={handleSubmit}>
+                Cadastrar
+              </button>
+            )}
             <p>
               {showPopup && <PopUp message={popupMessage} type={popupType} />}
             </p>
