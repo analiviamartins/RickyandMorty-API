@@ -28,6 +28,9 @@ function page() {
   const [page, setPage] = useState(1);
   const [listPerso, setListaPerso] = useState([]);
   const [dadosApi, setDadosApi] = useState(null);
+  const [cadastrados, setCadastrados] = useState(
+    listaPersonagens.getContador()
+  );
 
   // Edit
   const [flag, setFlag] = useState(0);
@@ -83,6 +86,7 @@ function page() {
 
       listaPersonagens.add(name, status, species, gender, image);
       setListaPerso(listaPersonagens.getListaPerso());
+      setCadastrados(listaPersonagens.getContador());
       atualizarEdit();
       handleShowPopup("Cadastro concluído", "success");
     } catch (error) {
@@ -113,6 +117,7 @@ function page() {
   const deletePers = (person) => {
     listaPersonagens.deletePers(person);
     setListaPerso(listaPersonagens.getListaPerso());
+    setCadastrados(listaPersonagens.getContador());
   };
 
   const atualizarEdit = () => {
@@ -194,7 +199,92 @@ function page() {
               // Exibir 20 persobagens por página
               listPerso
                 .slice((page - 1) * itemsPerPage, page * itemsPerPage)
-                .map((person) => (
+                .map((person) =>
+                  person.api ? (
+                    <div key={person.id} className={style.card} style={tema2}>
+                      <div className={style.content}>
+                        <h2 className={style.p}>{person.name}</h2>
+                        <img
+                          src={person.image}
+                          alt={person.name}
+                          width={150}
+                          height={150}
+                        />
+                        <p className={style.p}>
+                          <strong>Estado: </strong>
+                          {person.status === "Alive"
+                            ? "Vivo"
+                            : person.status === "Dead"
+                            ? "Morto"
+                            : "Desconhecido"}
+                        </p>
+                        <p className={style.p}>
+                          <strong>Especie: </strong>
+                          {person.species === "Human"
+                            ? "Humano"
+                            : person.species === "Alien"
+                            ? "Alienígena"
+                            : person.species === "Humanoid"
+                            ? "Humanóide"
+                            : person.species === "Mythological Creature"
+                            ? "Criatura Mitológica"
+                            : person.species === "Poopybutthole"
+                            ? "Poopybutthole"
+                            : person.species === "Animal"
+                            ? "Animal"
+                            : person.species === "Robot"
+                            ? "Robô"
+                            : person.species === "Disease"
+                            ? "Doença"
+                            : person.species === "Vampire"
+                            ? "Vampiro"
+                            : person.species === "Cronenberg"
+                            ? "Cronenberg"
+                            : person.species === "unknown"
+                            ? "Desconhecido"
+                            : person.species}
+                        </p>
+                        <p className={style.p}>
+                          <strong>
+                            Gênero:{" "}
+                            {person.gender === "Female"
+                              ? "Feminino"
+                              : person.gender === "Male"
+                              ? "Masculino"
+                              : "Desconhecido"}
+                          </strong>
+                        </p>
+                        <div>
+                          <button
+                            className={style.remove}
+                            onClick={() => deletePers(person)}
+                          >
+                            Excluir
+                          </button>
+                          <button
+                            className={style.edit}
+                            onClick={() => editPerso(person.id)}
+                          >
+                            Editar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null
+                )
+            ) : (
+              <Loading />
+            )}
+          </div>
+
+          <div className={style.lista}>
+            {cadastrados > 0 ? (
+              <h1 className={style.h1}>Personagens Cadastrados</h1>
+            ) : null}
+            {dadosApi ? (
+              // Exibir 20 personagens por página
+              listPerso.map((person) =>
+                !person.api ? (
                   <div key={person.id} className={style.card} style={tema2}>
                     <div className={style.content}>
                       <h2 className={style.p}>{person.name}</h2>
@@ -210,7 +300,9 @@ function page() {
                           ? "Vivo"
                           : person.status === "Dead"
                           ? "Morto"
-                          : "Desconhecido"}
+                          : person.status === "unknown"
+                          ? "Desconhecido"
+                          : person.status}
                       </p>
                       <p className={style.p}>
                         <strong>Especie: </strong>
@@ -264,7 +356,8 @@ function page() {
                       </div>
                     </div>
                   </div>
-                ))
+                ) : null
+              )
             ) : (
               <Loading />
             )}

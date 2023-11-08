@@ -9,7 +9,7 @@ class Persos {
     // Id aleatório entre 500 e 1000
     const id = Math.floor(Math.random() * (1000 - 500)) + 500;
 
-    const person = new Perso(id, name, status, species, gender, image);
+    const person = new Perso(id, name, status, species, gender, image, false);
     console.log("Criou personagem");
     console.log(person);
     this.listaPerso.push(person);
@@ -25,7 +25,8 @@ class Persos {
         person.status,
         person.species,
         person.gender,
-        person.image
+        person.image,
+        true
       );
       this.listaPerso.push(newCharacter);
     });
@@ -65,6 +66,17 @@ class Persos {
       (person, index, self) =>
         index === self.findIndex((t) => t.id === person.id)
     );
+  }
+
+  // Contador de personagens com api == false
+  getContador() {
+    let contador = 0;
+    this.listaPerso.forEach((person) => {
+      if (person.api == false) {
+        contador++;
+      }
+    });
+    return contador;
   }
 }
 
