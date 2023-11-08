@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import { useEffect, useState } from "react";
 import personagens from "@/data/charactersApi";
 import listPerso from "../models/listPerso";
 import style from "./page.module.css";
@@ -11,13 +12,31 @@ import Header from "./components/header/Header";
 const listaPersonagens = new listPerso();
 
 function page() {
+  // Inputs
+  const [name, setNome] = useState("");
+  const [status, setEstado] = useState("");
+  const [species, setEspecie] = useState("");
+  const [gender, setGenero] = useState("");
+  const [image, setImage] = useState("");
+
+  // PopUp
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState("");
+
+  // Api
   const [page, setPage] = useState(1);
   const [listPerso, setListaPerso] = useState([]);
   const [dadosApi, setDadosApi] = useState(null);
-  const [escuro, setEscuro] = useState(false);
+
+  // Edit
   const [flag, setFlag] = useState(0);
   const [editButton, setEditButton] = useState(false);
 
+  // Tema
+  const [escuro, setEscuro] = useState(false);
+
+  // Paginação
   const previous = () => {
     if (page > 1) {
       setPage(page - 1);
@@ -28,46 +47,6 @@ function page() {
     if (page < 34) {
       setPage(page + 1);
     }
-  };
-
-  const edit = (person) => {
-    setNome(person.name);
-    setEstado(person.status);
-    setEspecie(person.species);
-    setGenero(person.gender);
-    setImage(person.image);
-
-    setEditButton(true);
-    setFlag(person);
-  };
-
-  const update = () => {
-    listaPersonagens.atualizarEdicao(
-      flag,
-      name,
-      status,
-      species,
-      gender,
-      image
-    );
-
-    atualizarEdit();
-    setEditButton(false);
-    setFlag(0);
-  };
-
-  const atualizarEdit = () => {
-    setNome("");
-    setEstado("");
-    setEspecie("");
-    setGenero("");
-    setImage("");
-
-    setNome(listaPersonagens.name);
-    setEstado(listaPersonagens.status);
-    setEspecie(listaPersonagens.species);
-    setGenero(listaPersonagens.gender);
-    setImage(listaPersonagens.image);
   };
 
   useEffect(() => {
@@ -92,36 +71,53 @@ function page() {
     };
   }, [page]);
 
-  const [name, setNome] = useState("");
-  const [status, setEstado] = useState("");
-  const [species, setEspecie] = useState("");
-  const [gender, setGenero] = useState("");
-  const [image, setImage] = useState("");
-
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState("");
-  const [popupType, setPopupType] = useState("");
-
   const handleSubmit = () => {
     try {
       if (!name || !status || !species || !gender || !image) {
         return handleShowPopup("Parâmetros incompletos", "error");
       }
       listaPersonagens.add(name, status, species, gender, image);
-      setNome("");
-      setEstado("");
-      setEspecie("");
-      setGenero("");
-      setImage("");
+      atualizarEdit();
       handleShowPopup("Cadastro concluído", "success");
     } catch (error) {
       handleShowPopup("Erro aleatório", "error");
     }
   };
 
+  const editPerso = (id) => {
+    const person = listaPersonagens.getPersoPorId(id);
+    setNome(person.name);
+    setEstado(person.status);
+    setEspecie(person.species);
+    setGenero(person.gender);
+    setImage(person.image);
+
+    setEditButton(true);
+    setFlag(id);
+  };
+
+  const update = () => {
+    listaPersonagens.atualizarPerso(flag, name, status, species, gender, image);
+
+    atualizarEdit();
+    setEditButton(false);
+    setFlag(0);
+  };
+
   const deletePers = (person) => {
     listaPersonagens.deletePers(person);
     setListaPerso(listaPersonagens.getListaPerso());
+  };
+
+  const atualizarEdit = () => {
+    setNome("");
+    setEstado("");
+    setEspecie("");
+    setGenero("");
+    setImage("");
+
+    setListaPerso(listaPersonagens.getListaPerso());
+    setEditButton(false);
   };
 
   const handleShowPopup = (message, type) => {
@@ -262,7 +258,11 @@ function page() {
           </div>
 
           <div className={style.app} style={tema2}>
-            <h1 className={style.title}>Cadastre seu personagem aqui!</h1>
+            {editButton ? (
+              <h1 className={style.h1}>Editar Personagem</h1>
+            ) : (
+              <h1 className={style.h1}>Cadastrar Personagem</h1>
+            )}
             <input
               value={name}
               className={style.input}
@@ -298,21 +298,15 @@ function page() {
               type="text"
               placeholder="Link da imagem"
             />
-            <button
-              className={style.button}
-              type="button"
-              onClick={handleSubmit}
-            >
-              Cadastrar
-            </button>
-            <button
-              className={style.button}
-              type="button"
-              value={editButton}
-              onClick={() => update()}
-            >
-              Salvar
-            </button>
+            {editButton ? (
+              <button className={style.button} onClick={update}>
+                Atualizar
+              </button>
+            ) : (
+              <button className={style.button} onClick={handleSubmit}>
+                Cadastrar
+              </button>
+            )}
             <p>
               {showPopup && <PopUp message={popupMessage} type={popupType} />}
             </p>

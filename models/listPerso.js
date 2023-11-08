@@ -5,7 +5,10 @@ class Persos {
     this.listaPerso = [];
   }
 
-  add(id, name, status, species, gender, image) {
+  add(name, status, species, gender, image) {
+    // Id aleatório entre 500 e 1000
+    const id = Math.floor(Math.random() * (1000 - 500)) + 500;
+
     const person = new Perso(id, name, status, species, gender, image);
     this.listaPerso.push(person);
   }
@@ -31,13 +34,16 @@ class Persos {
   deletePers(person) {
     this.listaPerso = this.listaPerso.filter((perso) => perso.id !== person.id);
   }
-  getEdicaoPorId(id) {
+  getPersoPorId(id) {
     const person = this.listaPerso.find((person) => person.id == id);
 
     return person;
   }
-  atualizarEdicao(id, name, status, species, gender, image) {
-    const person = this.getEdicaoPorId(id);
+
+  atualizarPerso(id, name, status, species, gender, image) {
+    const person = this.getPersoPorId(id);
+    console.log("Encontrou?");
+    console.log(person);
 
     if (person) {
       person.name = name;
@@ -47,39 +53,7 @@ class Persos {
       person.image = image;
     }
 
-    this.atualizarPerso();
-
     return person;
-  }
-  atualizarPerso() {
-    this.name = "";
-    this.status = "";
-    this.species = "";
-    this.gender = "";
-    this.image = "";
-
-    this.listaPerso.map((person) => {
-      if (
-        person.id != "name" ||
-        person.id != "status" ||
-        person.id != "species" ||
-        person.id != "gender" ||
-        person.id != "image"
-      ) {
-        this.name = this.name;
-        this.name = "";
-        this.status = "";
-        this.species = "";
-        this.gender = "";
-        this.image = "";
-      } else {
-        this.name = this.name;
-        this.status = this.status;
-        this.species = this.species;
-        this.gender = this.gender;
-        this.image = this.image;
-      }
-    });
   }
 }
 
