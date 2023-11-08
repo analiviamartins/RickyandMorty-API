@@ -10,8 +10,7 @@ class Persos {
     const id = Math.floor(Math.random() * (1000 - 500)) + 500;
 
     const person = new Perso(id, name, status, species, gender, image, false);
-    console.log("Criou personagem");
-    console.log(person);
+
     this.listaPerso.push(person);
 
     this.removeDuplicate();
