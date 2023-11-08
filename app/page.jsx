@@ -9,7 +9,7 @@ import Loading from "./components/loading/Loading";
 import Header from "./components/header/Header";
 
 const listaPersonagens = new listPerso();
-console.log(listaPersonagens);
+
 function page() {
   const [page, setPage] = useState(1);
   const [listPerso, setListaPerso] = useState([]);
@@ -77,9 +77,9 @@ function page() {
       try {
         const dados = await personagens(page);
         if (!ignore) {
-          setDadosApi(dados);
           listaPersonagens.addApiData(dados);
-          setDadosApi(listaPersonagens.getListaPerso());
+          setDadosApi(dados);
+          setListaPerso(listaPersonagens.getListaPerso());
         }
       } catch (e) {
         throw e;
@@ -117,8 +117,6 @@ function page() {
     } catch (error) {
       handleShowPopup("Erro aleatório", "error");
     }
-
-    console.log(handleSubmit);
   };
 
   const deletePers = (person) => {
@@ -182,36 +180,41 @@ function page() {
 
           <div className={style.lista}>
             {dadosApi ? (
-              listaPersonagens.listaPerso.map((person) => (
-                <div key={person.id} className={style.card} style={tema2}>
-                  <div className={style.content}>
-                    <h2 className={style.p}>{person.name}</h2>
-                    <img
-                      src={person.image}
-                      alt={person.name}
-                      width={150}
-                      height={150}
-                    />
-                    <p className={style.p}>
-                      <strong>Estado: </strong>
-                      {person.status}
-                    </p>
-                    <p className={style.p}>
-                      <strong>Especie: </strong>
-                      {person.species}
-                    </p>
-                    <p className={style.p}>
-                      <strong>Gênero: {person.gender} </strong>
-                    </p>
-                    <button
-                      className={style.remove}
-                      onClick={() => deletePers(person)}
-                    >
-                      Excluir
-                    </button>
+              // Exibir 20 persobagens por página
+              listPerso.map((person) =>
+                person.id <= page * 20 && person.id > page * 20 - 20 ? (
+                  <div key={person.id} className={style.card} style={tema2}>
+                    <div className={style.content}>
+                      <h2 className={style.p}>{person.name}</h2>
+                      <img
+                        src={person.image}
+                        alt={person.name}
+                        width={150}
+                        height={150}
+                      />
+                      <p className={style.p}>
+                        <strong>Estado: </strong>
+                        {person.status}
+                      </p>
+                      <p className={style.p}>
+                        <strong>Especie: </strong>
+                        {person.species}
+                      </p>
+                      <p className={style.p}>
+                        <strong>Gênero: {person.gender} </strong>
+                      </p>
+                      <button
+                        className={style.remove}
+                        onClick={() => deletePers(person)}
+                      >
+                        Excluir
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))
+                ) : (
+                  ""
+                )
+              )
             ) : (
               <Loading />
             )}
