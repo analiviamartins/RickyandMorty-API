@@ -37,6 +37,7 @@ function page() {
   const [escuro, setEscuro] = useState(false);
 
   // Paginação
+  const itemsPerPage = 20;
   const previous = () => {
     if (page > 1) {
       setPage(page - 1);
@@ -44,10 +45,13 @@ function page() {
   };
 
   const next = () => {
-    if (page < 34) {
+    const totalPages = Math.ceil((42 * 20) / itemsPerPage);
+    if (page < totalPages) {
       setPage(page + 1);
     }
   };
+
+  // 40 * 20 = 800
 
   useEffect(() => {
     let ignore = false;
@@ -76,7 +80,9 @@ function page() {
       if (!name || !status || !species || !gender || !image) {
         return handleShowPopup("Parâmetros incompletos", "error");
       }
+
       listaPersonagens.add(name, status, species, gender, image);
+      setListaPerso(listaPersonagens.getListaPerso());
       atualizarEdit();
       handleShowPopup("Cadastro concluído", "success");
     } catch (error) {
@@ -129,6 +135,10 @@ function page() {
     }, 3000);
   };
 
+  const intervalo = setTimeout(() => {
+    <Loading />;
+  }, 1000);
+
   const tema = {
     backgroundColor: escuro ? "#1e2a39" : "#d9f7c8bc",
     color: escuro ? "#43ff2a" : "#1e2a39",
@@ -174,11 +184,17 @@ function page() {
             </button>
           </div>
 
+          {/* Exibir número da página atual */}
+          <div className={style.atual}>
+            <p className={style.p}>Página atual: {page}</p>
+          </div>
+
           <div className={style.lista}>
             {dadosApi ? (
               // Exibir 20 persobagens por página
-              listPerso.map((person) =>
-                person.id <= page * 20 && person.id > page * 20 - 20 ? (
+              listPerso
+                .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                .map((person) => (
                   <div key={person.id} className={style.card} style={tema2}>
                     <div className={style.content}>
                       <h2 className={style.p}>{person.name}</h2>
@@ -248,10 +264,7 @@ function page() {
                       </div>
                     </div>
                   </div>
-                ) : (
-                  ""
-                )
-              )
+                ))
             ) : (
               <Loading />
             )}

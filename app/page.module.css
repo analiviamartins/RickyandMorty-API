@@ -169,6 +169,17 @@
   font-size: large;
 }
 
+.atual {
+  background-color: #111;
+  color: #00ff00;
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  border: 0.625rem;
+  border-radius: 0.625rem;
+  text-align: center;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
 @media only screen and (max-width: 1024px) {
   .body {
     max-width: 100%;

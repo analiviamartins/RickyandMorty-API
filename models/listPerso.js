@@ -10,7 +10,11 @@ class Persos {
     const id = Math.floor(Math.random() * (1000 - 500)) + 500;
 
     const person = new Perso(id, name, status, species, gender, image);
+    console.log("Criou personagem");
+    console.log(person);
     this.listaPerso.push(person);
+
+    this.removeDuplicate();
   }
 
   async addApiData(dados) {
@@ -25,6 +29,8 @@ class Persos {
       );
       this.listaPerso.push(newCharacter);
     });
+
+    this.removeDuplicate();
   }
 
   getListaPerso() {
@@ -42,8 +48,6 @@ class Persos {
 
   atualizarPerso(id, name, status, species, gender, image) {
     const person = this.getPersoPorId(id);
-    console.log("Encontrou?");
-    console.log(person);
 
     if (person) {
       person.name = name;
@@ -54,6 +58,13 @@ class Persos {
     }
 
     return person;
+  }
+
+  removeDuplicate() {
+    this.listaPerso = this.listaPerso.filter(
+      (person, index, self) =>
+        index === self.findIndex((t) => t.id === person.id)
+    );
   }
 }
 
