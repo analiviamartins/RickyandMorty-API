@@ -148,10 +148,10 @@ function page() {
       <Header />
       <div className={style.body} style={tema}>
         <div className={style.imgLogo}>
-          <img src="/Rick-and-Morty.png" width={900} height={500} />
+          <img src="/Rick-and-Morty.png" width={900} height={300} />
         </div>
         <div className={style.imgLogoMobile}>
-          <img src="/Rick-and-Morty.png" width={400} height={200} />
+          <img src="/Rick-and-Morty.png" width={400} height={100} />
         </div>
         <div className={style.container}>
           <button
@@ -236,12 +236,20 @@ function page() {
                             : "Desconhecido"}
                         </strong>
                       </p>
-                      <button
-                        className={style.remove}
-                        onClick={() => deletePers(person)}
-                      >
-                        Excluir
-                      </button>
+                      <div>
+                        <button
+                          className={style.remove}
+                          onClick={() => deletePers(person)}
+                        >
+                          Excluir
+                        </button>
+                        <button
+                          className={style.edit}
+                          onClick={() => editPerso(person.id)}
+                        >
+                          Editar
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ) : (
