@@ -194,14 +194,47 @@ function page() {
                       />
                       <p className={style.p}>
                         <strong>Estado: </strong>
-                        {person.status}
+                        {person.status === "Alive"
+                          ? "Vivo"
+                          : person.status === "Dead"
+                          ? "Morto"
+                          : "Desconhecido"}
                       </p>
                       <p className={style.p}>
                         <strong>Especie: </strong>
-                        {person.species}
+                        {person.species === "Human"
+                          ? "Humano"
+                          : person.species === "Alien"
+                          ? "Alienígena"
+                          : person.species === "Humanoid"
+                          ? "Humanóide"
+                          : person.species === "Mythological Creature"
+                          ? "Criatura Mitológica"
+                          : person.species === "Poopybutthole"
+                          ? "Poopybutthole"
+                          : person.species === "Animal"
+                          ? "Animal"
+                          : person.species === "Robot"
+                          ? "Robô"
+                          : person.species === "Disease"
+                          ? "Doença"
+                          : person.species === "Vampire"
+                          ? "Vampiro"
+                          : person.species === "Cronenberg"
+                          ? "Cronenberg"
+                          : person.species === "unknown"
+                          ? "Desconhecido"
+                          : person.species}
                       </p>
                       <p className={style.p}>
-                        <strong>Gênero: {person.gender} </strong>
+                        <strong>
+                          Gênero:{" "}
+                          {person.gender === "Female"
+                            ? "Feminino"
+                            : person.gender === "Male"
+                            ? "Masculino"
+                            : "Desconhecido"}
+                        </strong>
                       </p>
                       <button
                         className={style.remove}
